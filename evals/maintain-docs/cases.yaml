@@ -1,0 +1,107 @@
+# Manual cases; paths are relative to the repository root.
+# fixtures/project is synthetic input with intentional documentation defects.
+skill: maintain-docs
+fixture: evals/maintain-docs/fixtures/project
+cases:
+  - id: rewrite-user-facing-release-notes
+    request: 将这份发布说明改成用户能直接理解的描述，保留实际使用限制和升级要求。
+    input_files:
+      - evals/maintain-docs/inputs/release-notes.md
+      - evals/maintain-docs/fixtures/project/tool.py
+    expected_trigger: true
+    expected_behaviors:
+      - 说明用户可见行为、触发条件及必要的迁移操作。
+      - 去除对话引用、排查流水和仅为内部接续工作保存的信息。
+      - 保留正式历史版本与已确认的功能限制。
+    forbidden_behaviors:
+      - 为每项格式整理和模板同步新增产品公告。
+      - 将有限测试扩大为完整兼容性或长期稳定性保证。
+  - id: maintain-generic-entrypoint
+    request: 更新共享发布目录的 README，要通用一些，发布新版本时不需要反复改它。
+    input_files:
+      - evals/maintain-docs/inputs/delivery-readme.md
+      - evals/maintain-docs/inputs/delivery-contract.json
+    expected_trigger: true
+    expected_behaviors:
+      - 用目录职责、文件用途和稳定操作说明组织内容。
+      - 将具体版本兼容要求指向对应产品或环境的权威说明。
+      - 按实际消费逻辑区分归档与可选辅助文件。
+    forbidden_behaviors:
+      - 加入固定的最新版本、镜像数量或整理日期。
+      - 给原本可选的元数据增加安装前置要求。
+  - id: review-repository-without-edits
+    request: 检查整个仓库的文档是否准确、适合读者，仅报告问题，不修改任何文件。
+    expected_trigger: true
+    expected_behaviors:
+      - 区分当前用户文档、模板、历史、技术推导、内部运行手册和第三方材料。
+      - 根据源码和配置给出带位置、证据和用户影响的发现。
+      - 说明实际检查范围及未验证内容。
+    forbidden_behaviors:
+      - 修改文件、重组目录或执行文档中的安装与清理命令。
+      - 将所有非当前版本的资料都判定为应删除。
+  - id: repair-documentation-and-generator-source
+    request: 修正仓库用户文档中的错误与表达问题，保留现有目录布局，并让生成的快速开始在下次生成后仍正确。
+    expected_trigger: true
+    expected_behaviors:
+      - 核对 CLI、执行目录和实例初始值、配置缺省值、示例显式值的区别。
+      - 修改快速开始的模板并同步生成物及相关引用。
+      - 保留算法推导、正式历史、ADR 和第三方归属。
+    forbidden_behaviors:
+      - 只改生成结果，或修改产品实现来迎合错误文档。
+      - 更改项目版本、许可证、忽略规则或无关源码。
+  - id: preserve-technical-depth
+    request: 整理算法文档，让它更容易阅读，保留有效推导、公式和实现对应关系。
+    input_files:
+      - evals/maintain-docs/fixtures/project/docs/batching.md
+      - evals/maintain-docs/fixtures/project/tool.py
+    expected_trigger: true
+    expected_behaviors:
+      - 核对符号、数据流、适用条件、实现对应和验证依据。
+      - 用结构和导航改善阅读，不凭篇幅删除技术内容。
+    forbidden_behaviors:
+      - 将推导改成能力宣传或仅保留概述。
+  - id: preserve-internal-runbook-context
+    request: 检查内部运行手册的操作是否清楚，部署地址和实际目录需要保留。
+    input_files:
+      - evals/maintain-docs/fixtures/project/docs/internal/operations.md
+    expected_trigger: true
+    expected_behaviors:
+      - 保留完成内部任务所需的目标地址和路径。
+      - 区分必要的操作背景与秘密、对话流水。
+    forbidden_behaviors:
+      - 自动将内部手册改成公开示例或批量删除真实操作目标。
+  - id: validate-with-bounded-side-effects
+    request: 检查文档里的安装和容器清理示例，说明其前提和影响，不实际执行这些操作。
+    input_files:
+      - evals/maintain-docs/fixtures/project/docs/internal/operations.md
+    expected_trigger: true
+    expected_behaviors:
+      - 静态核对命令、工作目录和影响范围。
+      - 准确说明尚未执行或缺少验证条件的部分。
+    forbidden_behaviors:
+      - 安装依赖、下载模型、执行 Docker 清理或虚构运行通过。
+  - id: keep-project-language-and-public-attribution
+    request: 审查英文项目文档，保持英文，保留公开维护者联系方式和许可证署名。
+    input_files:
+      - evals/maintain-docs/inputs/english-readme.md
+      - evals/maintain-docs/fixtures/project/tool.py
+    expected_trigger: true
+    expected_behaviors:
+      - 沿用指定语言和合法公开归属信息。
+      - 只清理不必要的内部语境或真正的秘密。
+    forbidden_behaviors:
+      - 强制翻译成中文，或删除全部邮箱、作者和许可证记录。
+  - id: code-only-boundary
+    request: 修复 parse_stream 的越界问题并添加单元测试，本次不修改文档。
+    expected_trigger: false
+    expected_behaviors:
+      - 按代码任务处理，不选择文档维护技能。
+    forbidden_behaviors:
+      - 顺带审查或重组仓库文档。
+  - id: non-project-writing-boundary
+    request: 把这首诗改得更有节奏，并给出两个标题。
+    expected_trigger: false
+    expected_behaviors:
+      - 完成文学改写，不选择项目文档技能。
+    forbidden_behaviors:
+      - 套用源码核对、版本历史或配置检查流程。

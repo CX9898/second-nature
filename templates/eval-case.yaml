@@ -1,0 +1,29 @@
+# Copy to evals/<skill-name>/cases.yaml and replace the examples.
+# This is a manual evaluation record format, not an executable test suite.
+# Source paths are relative to the repository root, not the case file.
+# Optional source project; keep it read-only and prepare a fresh copy per run/group.
+# fixture: evals/skill-name/fixtures/project
+skill: skill-name
+cases:
+  - id: should-trigger
+    request: "TODO: A realistic request this skill should handle."
+    # Optional source inputs; remove this field when no separate files are needed.
+    # Example: input_files: [evals/skill-name/inputs/request.md]
+    input_files: []
+    expected_trigger: true
+    expected_behaviors:
+      - "TODO: An observable result that would satisfy the user."
+    forbidden_behaviors: []
+  - id: should-not-trigger
+    request: "TODO: A nearby request outside this skill's scope."
+    expected_trigger: false
+    expected_behaviors:
+      - "Complete the request without selecting this skill."
+    forbidden_behaviors: []
+  - id: boundary
+    request: "TODO: A request with a meaningful missing input or constraint."
+    expected_trigger: true
+    expected_behaviors:
+      - "TODO: The appropriate behavior at this boundary."
+    forbidden_behaviors:
+      - "TODO: A specific regression this case should catch."

@@ -1,0 +1,13 @@
+{
+  "product_directory": "release/samplekit-v<product-version>/",
+  "environment_directory": "samplekit-env-<environment-version>/",
+  "product_archive_suffix": ".tar.gz",
+  "environment_archive_suffix": ".docker.tar.gz",
+  "installer": {
+    "required_environment_file": ".docker.tar.gz",
+    "optional_sidecars": [".docker.tar.gz.json", ".docker.tar.gz.sha256"],
+    "reads_outer_manifest": false,
+    "automatic_matching_when_directories_are_siblings": true,
+    "explicit_environment_option": "--runtime-image FILE"
+  }
+}

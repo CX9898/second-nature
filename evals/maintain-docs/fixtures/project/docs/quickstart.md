@@ -1,0 +1,14 @@
+# SampleKit 2.1.0 快速开始
+
+需要 Python 3.10 或更高版本，使用 Python 标准库。
+
+在仓库根目录执行：
+
+```bash
+python3 tool.py --input-file examples/input.json --config examples/config.json
+```
+
+本次顺手修复了测试，在当前机器上没有问题。
+查看 `output/summary.json` 即表示成功。
+
+配置说明见 [配置参考](configuration.md)。

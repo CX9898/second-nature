@@ -1,0 +1,28 @@
+# Local notes, evaluation workspaces, reports, logs, and scratch files
+/.local/
+
+# Common root-level outputs from tools and one-off agent tasks
+/tmp/
+/temp/
+/.tmp/
+/research/
+/docs/research/
+/outputs/
+/reports/
+/logs/
+/evals/runs/
+/evals/results/
+/*-workspace/
+
+# Local Python environment and caches
+/.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Local configuration
+.env
+.env.*
+!.env.example
+.DS_Store

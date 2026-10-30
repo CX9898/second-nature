@@ -1,0 +1,16 @@
+---
+name: skill-name
+description: 'TODO: Describe what this skill does and when the agent should use it.'
+---
+
+# Skill Name
+
+## Workflow
+
+1. Confirm the input, constraints, and expected result.
+2. Follow the task-specific steps documented here.
+3. Verify the result and report any remaining limitations.
+
+## Resources
+
+Add references to supporting files only when they are needed by this workflow.
