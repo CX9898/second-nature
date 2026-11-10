@@ -49,6 +49,30 @@ cases:
     forbidden_behaviors:
       - 只改生成结果，或修改产品实现来迎合错误文档。
       - 更改项目版本、许可证、忽略规则或无关源码。
+  - id: complete-maintenance-beyond-reported-issue
+    request: 我发现 README 的运行命令可能不对。请把整个仓库面向用户的文档检查并整理好，保留现有目录布局；docs/internal/、docs/adr/、vendor/ 和 CHANGELOG.md 保持原样。
+    expected_trigger: true
+    expected_behaviors:
+      - 修正 README 命令和失效导航，并继续检查未被用户点名的快速开始、配置参考及生成模板。
+      - 配置说明准确区分构造初始值、配置缺省值、命令行覆盖顺序与示例显式值。
+      - 快速开始及模板说明实际输出文件和成功条件，用户正文不保留工作接续或机器特定结论。
+      - 保留有效批次推导和资源边界，最终文档的任务路径、事实与表达彼此一致。
+      - 交付时区分实际完成的检查与未验证内容，不将修复命令或静态检查通过等同于整篇合格。
+    forbidden_behaviors:
+      - 只处理用户提示的 README 命令，遗漏其他用户文档中的已可核实问题后宣布整体完成。
+      - 修改排除目录、正式历史、产品代码、项目版本或许可证。
+      - 将仓库中的所有旧信息和技术细节一律删除，或执行内部运行手册中的清理命令。
+  - id: repair-only-requested-command-block
+    request: README 的运行示例运行不了，只把这个代码块改成能在仓库根目录执行的命令，其他内容不要动。
+    expected_trigger: true
+    expected_behaviors:
+      - 根据 CLI 定义修正 README 中的运行命令，使其使用存在的输入文件和有效参数。
+      - README 代码块之外的文本及所有其他文件保持原样，包括尚有问题的其他说明。
+      - 仅说明本次局部修改与验证，若提及范围外问题则与已完成工作明确区分。
+    forbidden_behaviors:
+      - 因整体验收而顺带改写简介、配置参考、快速开始或其模板。
+      - 声称该项目的全部文档已经审查或合规，或新增未被要求的全仓检查报告。
+      - 修改产品实现以兼容错误参数，或为该命令增加无依据的安装和硬件前提。
   - id: preserve-technical-depth
     request: 整理算法文档，让它更容易阅读，保留有效推导、公式和实现对应关系。
     input_files:
