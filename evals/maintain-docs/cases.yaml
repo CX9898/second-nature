@@ -73,6 +73,56 @@ cases:
       - 因整体验收而顺带改写简介、配置参考、快速开始或其模板。
       - 声称该项目的全部文档已经审查或合规，或新增未被要求的全仓检查报告。
       - 修改产品实现以兼容错误参数，或为该命令增加无依据的安装和硬件前提。
+  # These cases use a fresh copy of fixtures/catalog-kit instead of the shared
+  # fixtures/project. Preserve relative paths when assembling the listed inputs.
+  - id: review-reader-semantics-with-valid-structure
+    request: 审查 CatalogKit 的 docs/guide.md，判断第一次使用的人能否据此完成索引和报告任务。只报告问题，不修改文件。
+    input_files:
+      - evals/maintain-docs/fixtures/catalog-kit/README.md
+      - evals/maintain-docs/fixtures/catalog-kit/catalog.py
+      - evals/maintain-docs/fixtures/catalog-kit/catalog_cli.py
+      - evals/maintain-docs/fixtures/catalog-kit/reporting.py
+      - evals/maintain-docs/fixtures/catalog-kit/examples/books.json
+      - evals/maintain-docs/fixtures/catalog-kit/examples/config.json
+      - evals/maintain-docs/fixtures/catalog-kit/examples/saved-index.json
+      - evals/maintain-docs/fixtures/catalog-kit/templates/card.txt
+      - evals/maintain-docs/fixtures/catalog-kit/docs/guide.md
+      - evals/maintain-docs/fixtures/catalog-kit/docs/lifecycle.md
+    expected_trigger: true
+    expected_behaviors:
+      - 识别连续终端步骤中工作目录仍在 examples，后续报告命令却按仓库根目录解析脚本和路径；说明实际后果。
+      - 说明初始值、默认值和示例值缺少所属入口，依据实现区分 Catalog 构造默认 5、配置加载及 CLI 缺省 20、示例配置 50。
+      - 指出原参数、原格式及当前规则缺少明确参照，且输出章节混合状态接口、内部机制与制品用途，说明对目标读者的影响。
+      - 分别判断事实正确性、读者语义和操作衔接；保留已有有效数据结构、状态限制与输出说明，不以技术内容本身判定问题。
+      - 给出可定位的发现和适用依据，所有项目文件保持原样；静态链接或语法通过不作为指南可用的充分证据。
+    forbidden_behaviors:
+      - 因未找到源码错误、链接失效或明显对话措辞而宣布指南整体可用。
+      - 分别从仓库根目录验证每个代码块后，忽略文档明示的同一终端执行状态。
+      - 修改指南、产品代码或补造未提供的历史兼容版本。
+  - id: document-state-paths-and-transitive-runtime-resources
+    request: 根据 CatalogKit 的现有实现，补齐 docs/lifecycle.md 的 Python 接入与离线报告说明，给出可衔接的使用片段。保留目录布局，产品代码和其他文档不要改。
+    input_files:
+      - evals/maintain-docs/fixtures/catalog-kit/README.md
+      - evals/maintain-docs/fixtures/catalog-kit/catalog.py
+      - evals/maintain-docs/fixtures/catalog-kit/catalog_cli.py
+      - evals/maintain-docs/fixtures/catalog-kit/reporting.py
+      - evals/maintain-docs/fixtures/catalog-kit/examples/books.json
+      - evals/maintain-docs/fixtures/catalog-kit/examples/config.json
+      - evals/maintain-docs/fixtures/catalog-kit/examples/saved-index.json
+      - evals/maintain-docs/fixtures/catalog-kit/templates/card.txt
+      - evals/maintain-docs/fixtures/catalog-kit/docs/guide.md
+      - evals/maintain-docs/fixtures/catalog-kit/docs/lifecycle.md
+    expected_trigger: true
+    expected_behaviors:
+      - 新建实例设置原始书目后先 prepare 再查询；重新 set_books 会使旧索引失效，须重新准备。
+      - load 与 set_index 已提供可查询索引，不要求 prepare 或重新获得原始书目；若强制 prepare 会因缺少原始记录失败。
+      - 使用片段分别保持原始记录、加载文件和显式映射路径的状态条件，保存后能重载并查询同一结果。
+      - 沿 CLI 报告入口到 reporting.py 的调用识别 templates/card.txt 是必需运行资源，离线复制需保留其相对模块的位置；已有索引可直接生成报告。
+      - 仅修改 lifecycle.md，按实际执行或静态核对区分验证结论，不要求安装不存在的第三方包。
+    forbidden_behaviors:
+      - 将 prepare 写成所有实例查询、恢复或报告之前的统一必需步骤。
+      - 把仅复制 Python 源文件或仅满足构建索引入口的前提写成足以完成离线报告。
+      - 修改实现以使不成立的文档步骤可执行，或修复范围外的 guide.md。
   - id: preserve-technical-depth
     request: 整理算法文档，让它更容易阅读，保留有效推导、公式和实现对应关系。
     input_files:
