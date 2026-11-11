@@ -123,6 +123,71 @@ cases:
       - 将 prepare 写成所有实例查询、恢复或报告之前的统一必需步骤。
       - 把仅复制 Python 源文件或仅满足构建索引入口的前提写成足以完成离线报告。
       - 修改实现以使不成立的文档步骤可执行，或修复范围外的 guide.md。
+  # The next cases use a fresh copy of fixtures/parcel-desk. For either handoff
+  # case, copy only its selected input into case-inputs/handoff.md in that copy.
+  # The two handoffs contain the same facts; compare format with inputs fixed.
+  - id: review-short-contract-composition
+    request: 审查 ParcelDesk 的 docs/usage.md，判断示例数据能否按所述流程完成分组与检查。只报告问题，不修改文件。
+    input_files:
+      - evals/maintain-docs/fixtures/parcel-desk/README.md
+      - evals/maintain-docs/fixtures/parcel-desk/parcel.py
+      - evals/maintain-docs/fixtures/parcel-desk/docs/usage.md
+      - evals/maintain-docs/fixtures/parcel-desk/docs/architecture.md
+      - evals/maintain-docs/fixtures/parcel-desk/examples/parts.csv
+      - evals/maintain-docs/fixtures/parcel-desk/examples/part-checks.csv
+      - evals/maintain-docs/fixtures/parcel-desk/examples/parcel-checks.csv
+    expected_trigger: true
+    expected_behaviors:
+      - 沿零件记录、按编号分组的包裹、检查值和检查接口核对计数单位，识别首个片段的零件检查值不能直接作为包裹检查值。
+      - 用示例或实现说明分组后为两个包裹，而 part-checks 产生三个检查值，会触发数量校验失败。
+      - 保留省略检查值仍可统计包裹数的有效路径，以及按包裹提供检查值的替代路径，不将检查结果写成普遍前提。
+      - 报告能定位的组合缺口，区分各函数分别成立与示例端到端成立；输入文件均保持原样。
+    forbidden_behaviors:
+      - 因两个读取函数均按各自契约工作、命令能解析或小项目上下文较短而认定示例正确。
+      - 修改实现以广播、截断或自动汇总检查值，或要求所有调用都准备检查文件。
+      - 修复范围外架构图或将单个反例扩大为所有有检查值的路径都不可用。
+  - id: integrate-narrative-handoff
+    request: 根据 case-inputs/handoff.md 的交接材料核对并修正 docs/architecture.md，使保存、恢复和展示流程一致；需要时对照实现。保留目录布局，仅修改这份文档。
+    input_files:
+      - evals/maintain-docs/fixtures/parcel-desk/README.md
+      - evals/maintain-docs/fixtures/parcel-desk/parcel.py
+      - evals/maintain-docs/fixtures/parcel-desk/docs/usage.md
+      - evals/maintain-docs/fixtures/parcel-desk/docs/architecture.md
+      - evals/maintain-docs/fixtures/parcel-desk/examples/parts.csv
+      - evals/maintain-docs/fixtures/parcel-desk/examples/part-checks.csv
+      - evals/maintain-docs/fixtures/parcel-desk/examples/parcel-checks.csv
+      - evals/maintain-docs/inputs/parcel-handoff-narrative.md
+    expected_trigger: true
+    expected_behaviors:
+      - 根据内容契约区分两种 SQLite 产物：恢复读取 parts 表的零件详情，展示读取 counts 表的计数；不能仅凭容器格式认定可互换。
+      - 图和正文共同表达完整检查点到恢复、汇总到展示的关系，交接内容与最终成稿一致。
+      - 保留无需重新提供原始 CSV 即可恢复的有效路径，且单纯展示不被增加完整检查点前提。
+      - 仅修改 architecture.md，不能以交接者已核对或本地链接有效代替最终数据流验收。
+    forbidden_behaviors:
+      - 沿用展示汇总直接恢复完整分组的图示，或只修改正文却保留与其冲突的图。
+      - 给所有消费者一律连接全部输出材料，或删除有效展示路径来消除冲突。
+      - 改动产品代码、其他文档或交接材料。
+  - id: integrate-contract-handoff
+    request: 根据 case-inputs/handoff.md 的交接材料核对并修正 docs/architecture.md，使保存、恢复和展示流程一致；需要时对照实现。保留目录布局，仅修改这份文档。
+    input_files:
+      - evals/maintain-docs/fixtures/parcel-desk/README.md
+      - evals/maintain-docs/fixtures/parcel-desk/parcel.py
+      - evals/maintain-docs/fixtures/parcel-desk/docs/usage.md
+      - evals/maintain-docs/fixtures/parcel-desk/docs/architecture.md
+      - evals/maintain-docs/fixtures/parcel-desk/examples/parts.csv
+      - evals/maintain-docs/fixtures/parcel-desk/examples/part-checks.csv
+      - evals/maintain-docs/fixtures/parcel-desk/examples/parcel-checks.csv
+      - evals/maintain-docs/inputs/parcel-handoff-contracts.md
+    expected_trigger: true
+    expected_behaviors:
+      - 根据内容契约区分两种 SQLite 产物：恢复读取 parts 表的零件详情，展示读取 counts 表的计数；不能仅凭容器格式认定可互换。
+      - 图和正文共同表达完整检查点到恢复、汇总到展示的关系，交接内容与最终成稿一致。
+      - 保留无需重新提供原始 CSV 即可恢复的有效路径，且单纯展示不被增加完整检查点前提。
+      - 仅修改 architecture.md，不能以交接者已核对或本地链接有效代替最终数据流验收。
+    forbidden_behaviors:
+      - 沿用展示汇总直接恢复完整分组的图示，或只修改正文却保留与其冲突的图。
+      - 给所有消费者一律连接全部输出材料，或删除有效展示路径来消除冲突。
+      - 改动产品代码、其他文档或交接材料。
   - id: preserve-technical-depth
     request: 整理算法文档，让它更容易阅读，保留有效推导、公式和实现对应关系。
     input_files:
