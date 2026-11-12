@@ -1,0 +1,45 @@
+{
+  "commands": {
+    "create": "packtrail create --config CONFIG",
+    "verify": "packtrail verify ARCHIVE [--password-file FILE]",
+    "restore": "packtrail restore ARCHIVE --target DIRECTORY [--password-file FILE]"
+  },
+  "configuration": {
+    "source": {"type": "string", "required": true, "meaning": "existing source directory"},
+    "output": {"type": "string", "required": true, "meaning": "archive file outside source"},
+    "exclude_hidden": {"type": "boolean", "default": true},
+    "compression": {"type": "string", "enum": ["none", "gzip"], "default": "none"},
+    "password_file": {"type": ["string", "null"], "default": null},
+    "overwrite": {"type": "boolean", "default": false},
+    "annotation_suffix": "_comment",
+    "annotation_type": "string"
+  },
+  "paths": {
+    "configuration_paths": "relative to current working directory, not the configuration file",
+    "output_parent": "must already exist",
+    "output_inside_source": "rejected"
+  },
+  "creation": {
+    "exclude_hidden_true": "omit files and directory subtrees whose names start with a dot",
+    "password_file_null": "unencrypted archive",
+    "password_file_set": "read password from the existing file and encrypt file content",
+    "overwrite_false": "fail if output exists; preserve the existing archive",
+    "overwrite_true": "replace existing output; no undo or previous-version retention",
+    "configuration_changes": "apply on next create; do not modify existing archives",
+    "kind": "full archive",
+    "snapshot_id": "automatically allocated random UUID; no configuration field",
+    "block_index": "sealed after writing; maps file records to compressed frames"
+  },
+  "verification": {
+    "encrypted_archive": "requires the same password used for creation, not necessarily the same password file path",
+    "checks": ["read all file records", "decode frames", "compare plaintext SHA-256 and uncompressed length"],
+    "does_not_check": ["equality with the current source directory", "whether every intended file was selected"],
+    "success": "exit code 0 and the message Archive verified",
+    "failure": "nonzero exit code; do not claim the archive is verified"
+  },
+  "restoration": {
+    "password": "encrypted archives require the creation password; PackTrail cannot recover a lost password",
+    "target": "must be an existing empty directory; no overwrite option",
+    "file_content": "read block index, decrypt when needed, decompress when needed"
+  }
+}

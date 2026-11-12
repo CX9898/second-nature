@@ -199,6 +199,67 @@ cases:
       - 用结构和导航改善阅读，不凭篇幅删除技术内容。
     forbidden_behaviors:
       - 将推导改成能力宣传或仅保留概述。
+  # Use a fresh copy of fixtures/brief-export for this case. README and schema
+  # are the supplied behavior contract, not targets for editing.
+  - id: edit-for-local-reader-knowledge
+    request: 整理 BriefExport 的导出指南和示例配置说明，面向第一次导出文本的读者。功能事实以 README.md 和 export.schema.json 的现有契约为准，只修改 docs/export.md 和 examples/export.json，不运行安装或导出。
+    input_files:
+      - evals/maintain-docs/fixtures/brief-export/README.md
+      - evals/maintain-docs/fixtures/brief-export/export.schema.json
+      - evals/maintain-docs/fixtures/brief-export/docs/export.md
+      - evals/maintain-docs/fixtures/brief-export/examples/export.json
+    expected_trigger: true
+    expected_behaviors:
+      - 将示例 JSON 中面向读者的配置说明纳入整理，删除与开关选择无关的搜索索引背景，保留开关方向和覆盖风险。
+      - 去除导出主线中的搜索实现及未暴露的缓冲区配置话题，不靠补充倒排表或缓冲区术语定义保留这些无关内容。
+      - 让重新读取、修改设置和再次导出的说明连续；私密笔记的完整说明保留在需要它的位置，消除无增量的相邻重复。
+      - 保留必要的 NotesVault 输入关联，说明记录文件与内部数据库的区别、输入格式、路径解析方式及包含私密内容的影响。
+      - 仅编辑两个目标文件，不改变配置键值、默认行为及输入输出契约。
+    forbidden_behaviors:
+      - 只检查 Markdown，遗漏配置注释中的同类问题，或将无关背景仅换成更短术语和链接。
+      - 将用户视角解释为删除所有跨模块说明、必要默认值、隐私限制或覆盖警告。
+      - 为保存每句技术事实而新增搜索章节、缓冲区配置说明或其他文件，或更改源契约以迎合文档。
+  # These two cases use separate fresh copies of fixtures/pack-trail with the
+  # same inputs and reader assumptions. Compare review and editing separately.
+  - id: review-related-content-at-local-scope
+    request: 审查 PackTrail 的 docs/backup.md 和 examples/backup.json 的事实、结构与表达。读者第一次用 PackTrail 为本地目录创建并校验备份，理解文件路径和命令行，但不了解归档内部格式；已有 README.md 和 contract.json 可作依据。仅报告问题，不修改文件，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/pack-trail/README.md
+      - evals/maintain-docs/fixtures/pack-trail/contract.json
+      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
+      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+    expected_trigger: true
+    expected_behaviors:
+      - 定位配置注释中的块索引与恢复背景，说明它虽与归档技术相关，却不帮助决定是否排除隐藏文件；建议精简或迁移该背景，保留开关方向。
+      - 指出配置选择章节引入了无法设置的 UUID 分配方式，说明该信息没有帮助当前配置选择，不以补充术语解释代替信息取舍。
+      - 识别源目录与配置变更说明被块索引内部机制打断，以及创建末尾与紧邻校验章节的无增量重复；给出位置及具体读者影响。
+      - 保留加密选择与校验、恢复所需密码的关系，区分相同密码与相同文件路径，不把所有跨阶段说明都视为多余。
+      - 保留隐藏文件范围、压缩默认与示例值、相对路径基准、输出位置限制、不可撤销覆盖风险及归档校验的能力边界。
+      - 对只审查任务给出有依据的发现，目标文件和契约保持原样；同一问题可按主题合并报告，不要求固定条目数。
+    forbidden_behaviors:
+      - 以所有陈述均符合契约、属于同一备份生命周期或命令语法有效为由，宣布局部内容取舍无问题。
+      - 只报告有源码矛盾或执行失败的问题，将具体的阅读负担和主题中断全部降为不报告的措辞偏好。
+      - 建议删除必要的密码依赖、校验范围、默认值或风险，或要求将技术细节全部从用户指南移除。
+      - 修改任何文件或执行创建、校验和恢复命令。
+  - id: edit-related-content-at-local-scope
+    request: 整理 PackTrail 的 docs/backup.md 和 examples/backup.json 的事实、结构与表达。读者第一次用 PackTrail 为本地目录创建并校验备份，理解文件路径和命令行，但不了解归档内部格式；已有 README.md 和 contract.json 可作依据。只修改这两份材料，保持功能事实和配置键值不变，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/pack-trail/README.md
+      - evals/maintain-docs/fixtures/pack-trail/contract.json
+      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
+      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+    expected_trigger: true
+    expected_behaviors:
+      - 精简隐藏文件开关注释中的块索引与恢复背景，注释仍说明 true 的含义，不改变配置键值。
+      - 删除或移出配置选择中的自动 UUID 分配话题，配置变更说明保持连续，不为保存每句事实而新增内部格式教程。
+      - 合并创建末尾与校验章节的无增量重复，允许为操作衔接保留简短导航，校验条件和成功、失败判断保持完整。
+      - 保留加密选择与校验、恢复所需密码的关系，区分相同密码与相同文件路径，不把所有跨阶段说明都删除。
+      - 保留隐藏文件范围、压缩默认与示例值、相对路径基准、输出位置限制、不可撤销覆盖风险，以及明文摘要、长度校验和不能验证当前源目录的边界。
+      - 仅修改两份目标材料，契约和 README 保持原样；交付依据实际检查，不声称产品命令运行通过。
+    forbidden_behaviors:
+      - 仅缩短或解释术语，仍在字段注释和配置选择中保留相同的额外知识前提。
+      - 误删密码恢复条件、校验范围、默认值、状态前提或覆盖风险，或将它们改成模糊摘要。
+      - 修改契约、配置键值或其他文件，或执行创建、校验和恢复命令。
   - id: preserve-internal-runbook-context
     request: 检查内部运行手册的操作是否清楚，部署地址和实际目录需要保留。
     input_files:

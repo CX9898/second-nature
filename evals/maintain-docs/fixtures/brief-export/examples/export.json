@@ -1,0 +1,8 @@
+{
+  "source": "records.json",
+  "output": "notes.txt",
+  "exclude_private_comment": "设为 true 可排除私密笔记；搜索组件将词项归一化，完成索引发布后切换倒排表。",
+  "exclude_private": true,
+  "replace_output_comment": "设为 true 会覆盖同名输出文件，BriefExport 无法撤销此操作。",
+  "replace_output": false
+}

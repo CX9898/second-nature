@@ -1,0 +1,12 @@
+{
+  "source": "project",
+  "output": "backups/project.ptb",
+  "exclude_hidden_comment": "设为 true 可排除点号开头的文件和目录；归档封口后块索引只读，恢复阶段按索引定位压缩帧。",
+  "exclude_hidden": true,
+  "compression_comment": "可选 none 或 gzip，省略时为 none；本示例使用 gzip。",
+  "compression": "gzip",
+  "password_file_comment": "从文件读取密码以加密归档；校验和恢复需要相同密码，PackTrail 无法找回丢失的密码。",
+  "password_file": "backup.key",
+  "overwrite_comment": "设为 true 会覆盖同名归档，不保留旧版本，无法撤销。",
+  "overwrite": false
+}

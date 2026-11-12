@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "source": {"type": "string"},
+    "output": {"type": "string"},
+    "exclude_private": {"type": "boolean", "default": true},
+    "replace_output": {"type": "boolean", "default": false}
+  },
+  "patternProperties": {
+    "_comment$": {"type": "string"}
+  },
+  "required": ["source", "output"],
+  "additionalProperties": false
+}
