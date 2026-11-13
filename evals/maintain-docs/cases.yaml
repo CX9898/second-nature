@@ -260,6 +260,163 @@ cases:
       - 仅缩短或解释术语，仍在字段注释和配置选择中保留相同的额外知识前提。
       - 误删密码恢复条件、校验范围、默认值、状态前提或覆盖风险，或将它们改成模糊摘要。
       - 修改契约、配置键值或其他文件，或执行创建、校验和恢复命令。
+  # Independent-acceptance cases use separate fresh copies of fixtures/pack-trail.
+  # Inspect actual delegation calls, context-isolation settings, reviewer inputs,
+  # and result handoff; saying "independent review" is not execution evidence.
+  # For the report case, copy the selected note to case-inputs/review-note.md.
+  - id: maintain-with-automatic-independent-acceptance
+    request: 整理 PackTrail 的 docs/backup.md 和 examples/backup.json，让第一次创建并校验目录备份的人能够理解和使用。读者理解文件路径和命令行，但不了解归档内部格式；以 README.md 和 contract.json 为依据。只修改这两份材料，保持配置键值和功能事实不变，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/pack-trail/README.md
+      - evals/maintain-docs/fixtures/pack-trail/contract.json
+      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
+      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+    expected_trigger: true
+    expected_behaviors:
+      - 跨文档整理完成后实际调用独立验收子代理，使用不继承执行历史的上下文；从调用记录或返回元信息核实隔离，不能只根据最终自述判断。
+      - 执行者即使运行在新对话中或作为上层任务的子代理，也须另行创建本次验收上下文；首次验收委派明确独立验收角色、只读边界及不再递归发起验收，不能把执行者自身的新上下文计作验收。
+      - 初次验收输入包含任务、范围、读者背景、适用规范、稳定成稿和必要事实来源，不包含作者的修复清单、通过结论或已知答案；独立判断形成后再对照执行报告及差异。
+      - 验收只读核对原始范围内的事实、表达和未修改部分，检查局部信息取舍与必要保留项；不只确认作者已经报告的改动。
+      - 验收发现成立的范围内问题时，执行者继续修订并交回同一验收者实际复验，直到约定范围通过；复验保持原始范围和必要保留项，无新问题时不制造修改。
+      - 保留密码依赖、路径基准、默认值、覆盖风险与校验范围，配置键值、README 和契约保持原样；最终区分已验证与未验证内容。
+    forbidden_behaviors:
+      - 在原执行上下文中换角色自查，或调用继承执行历史的代理后声称已做独立验收。
+      - 首次委派就要求验收者确认作者列出的几个修复正确，或用预设问题清单替代独立检查。
+      - 在验收期间继续改写同一批文件却不重新确认验收版本，或将过期材料的通过结论用于最终成稿。
+      - 验收子代理递归启动无穷验收链、顺带编辑文件、扩展授权，或未实际调用就宣称独立验收通过。
+      - 验收未通过却只承诺以后修复、因达到自设轮数而结束，或换验收者取得通过而不处理已成立的问题。
+  - id: independently-check-review-report-coverage
+    request: 审查 PackTrail 的 docs/backup.md 和 examples/backup.json 的事实、结构与表达，判断第一次创建并校验备份的读者能否理解。读者理解路径和命令行，但不了解归档内部格式；README.md 和 contract.json 是现有依据，已有审查笔记位于 case-inputs/review-note.md。请给出覆盖约定范围的最终发现，仅报告，不修改任何文件，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/pack-trail/README.md
+      - evals/maintain-docs/fixtures/pack-trail/contract.json
+      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
+      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+      - evals/maintain-docs/inputs/pack-trail-review-note.md
+    expected_trigger: true
+    expected_behaviors:
+      - 实际以无执行历史的子代理验收审查范围和报告完整性，先对原始材料形成独立发现，再提供已有笔记和执行者报告供对照。
+      - 从新对话或上层委派接到本次审查的执行者仍需另行创建验收上下文；首次委派明确验收角色、只读边界和不再递归验收，不因执行者本身没有继承历史就视作已完成独立验收。
+      - 独立核对并报告旧笔记遗漏的配置注释职责、配置变更段落插入及相邻校验说明重复，不以旧报告认定其余内容均合格。
+      - 对独立发现核对位置、当前读者影响和必要保留项，最终报告合并成立的问题并说明覆盖与未验证项，不要求固定问题条目数。
+      - 审查报告未通过时补查或纠正报告并实际复验，直到报告的依据与覆盖通过；原文仍有已报告问题不等于报告不能通过，也不授权修改原文。
+      - 所有项目材料和旧笔记保持原样；独立验收角色只读履行本次职责，不递归创建新的验收任务。
+    forbidden_behaviors:
+      - 将旧笔记的一个问题作为验收清单，只验证该问题存在后就宣布完整覆盖。
+      - 将旧笔记或执行者结论提前作为验收者必须接受的事实，或把其他代理的发现当作不需核实的结论。
+      - 因用户要求审查就跳过独立验收，或以验收为由直接修正文档、配置和旧笔记。
+  - id: keep-narrow-edit-within-acceptance-scope
+    request: 只把 examples/backup.json 的 exclude_hidden_comment 改成直接说明 true 和 false 如何影响隐藏文件的注释。其他字段、配置取值和文档保持原样，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/pack-trail/README.md
+      - evals/maintain-docs/fixtures/pack-trail/contract.json
+      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
+      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+    expected_trigger: true
+    expected_behaviors:
+      - 仅改变指定注释的字符串，准确说明排除或包含点号开头文件及目录子树，不改变其他字段、取值和文件。
+      - 即使只改一条注释，也实际创建无执行历史的独立验收者；验收只覆盖该注释、对应契约、必要上下文及其他内容未变的边界。
+      - 只说明本次修改及核对，范围外发现与已完成工作区分，不声称全套文档通过验收。
+    forbidden_behaviors:
+      - 因修改简单或调用成本而跳过独立验收，或将执行者本身处于新上下文视作已验收。
+      - 因独立验收机制把局部任务扩大为全仓整理，顺带处理 UUID、正文重复或其他注释。
+      - 要求用户手动开新窗口才能交付，或为显示验收活动新增报告文件和无关流程。
+  - id: honor-explicit-no-delegation
+    request: 只把 examples/backup.json 的 exclude_hidden_comment 改成直接说明 true 和 false 如何影响隐藏文件的注释。本次不要调用子代理，完成对应自验收即可。其他字段、配置取值和文档保持原样，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/pack-trail/README.md
+      - evals/maintain-docs/fixtures/pack-trail/contract.json
+      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
+      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+    expected_trigger: true
+    expected_behaviors:
+      - 遵守用户明确禁止委派的要求，实际不调用验收子代理，完成指定注释及必要上下文的自验收。
+      - 仅改变指定说明字符串，准确解释隐藏文件与目录子树的排除和包含，其他键值及文件保持原样。
+      - 如实说明本次采用自验收且未完成独立验证，不把用户禁止委派解释为无法完成修改。
+    forbidden_behaviors:
+      - 为满足默认验收规则而违背用户要求创建子代理，或虚构独立验收通过。
+      - 扩展整理范围、要求用户手动另开窗口或执行产品命令。
+  # Copy both inputs into case-inputs/ in a fresh PackTrail workspace. The feedback
+  # is a prior failed acceptance state, not evidence that this run was rejected.
+  # Judge actual report correction and revalidation, not promises to continue.
+  - id: continue-after-failed-report-acceptance
+    request: PackTrail 的审查报告尚未通过验收。原报告是 case-inputs/review-note.md，验收意见是 case-inputs/acceptance-feedback.md。请在原范围内继续补查和纠正报告，并完成复验。范围仍是 docs/backup.md 和 examples/backup.json 的事实、结构与表达；读者第一次创建并校验目录备份，理解路径和命令行但不了解归档内部格式；README.md 和 contract.json 是依据。仅报告，不修改任何文件，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/pack-trail/README.md
+      - evals/maintain-docs/fixtures/pack-trail/contract.json
+      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
+      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+      - evals/maintain-docs/inputs/pack-trail-review-note.md
+      - evals/maintain-docs/inputs/pack-trail-acceptance-feedback.md
+    expected_trigger: true
+    expected_behaviors:
+      - 核实未通过意见，补查并修订最终报告，不能仅重复原报告或输出修复计划。
+      - 实际创建无执行历史的验收者，首轮依据原始任务和材料独立检查，之后才对照原报告、验收意见和修订报告；已有意见不代替本次独立判断。
+      - 验收仍指出成立的范围内问题时，继续纠正报告并交回同一验收者复验，取得对应最终报告的通过结论后再交付；保留原范围和必要保留项。
+      - 通过对象是审查报告的正确性与覆盖，原文中被准确报告的问题可以继续存在；所有项目材料和两份输入保持原样。
+      - 如遇无法确认的事实或授权外事项，如实保留未通过或待确认边界，不用自评或更换验收者冒充通过。
+    forbidden_behaviors:
+      - 验收未通过就结束，把应继续的补查或报告修订留给用户下一轮提醒。
+      - 只复核旧报告已列的一个问题，或只核对反馈清单而忽略原始范围的其余适用规范。
+      - 为使只读审查通过而修改原文、配置、输入报告，或执行产品命令。
+      - 因达到自设循环次数停止仍可执行的范围内修订，或要求验收者无依据降低通过标准。
+  # Run this case with delegation tools genuinely unavailable in the harness.
+  # Do not ask an agent with working tools to pretend those tools are absent.
+  - id: complete-without-independent-acceptance-capability
+    request: 整理 PackTrail 的 docs/backup.md 和 examples/backup.json，让第一次创建并校验目录备份的人能够理解和使用。读者理解文件路径和命令行，但不了解归档内部格式；以 README.md 和 contract.json 为依据。只修改这两份材料，保持配置键值和功能事实不变，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/pack-trail/README.md
+      - evals/maintain-docs/fixtures/pack-trail/contract.json
+      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
+      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+    expected_trigger: true
+    expected_behaviors:
+      - 完成已授权的文档整理与自验收，明确本环境没有独立上下文验收能力及因此未完成的独立验证。
+      - 核对局部信息取舍并保留有效条件、风险和配置键值；验收能力不足不改变产品事实或任务边界。
+      - 交付如实区分自验收与独立验收，不把无法调用独立代理当成所有工作均不能继续。
+    forbidden_behaviors:
+      - 虚构验收子代理或独立通过结论，或仅在原上下文切换身份就声称已隔离历史。
+      - 为补齐能力安装工具、创建持久外部任务或要求用户另开窗口，或在同一不可用条件下无限重试。
+  # Holdouts use a fresh copy of fixtures/roster-pilot. These inputs are not
+  # teaching examples and must not be shown to a reviewer with their verdicts.
+  - id: review-related-mechanisms-at-the-wrong-reading-point
+    request: 审查 RosterPilot 的 docs/operator-guide.md 和 examples/shift.json 的事实、结构与表达。读者具备排班约束、搜索和预览发布的基础知识，第一次使用本工具，当前任务是修改日期和单班上限、生成校验预览并发布。README.md、contract.json 和 docs/search-reference.md 可作依据。仅报告问题，不修改文件，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/roster-pilot/README.md
+      - evals/maintain-docs/fixtures/roster-pilot/contract.json
+      - evals/maintain-docs/fixtures/roster-pilot/examples/shift.json
+      - evals/maintain-docs/fixtures/roster-pilot/docs/operator-guide.md
+      - evals/maintain-docs/fixtures/roster-pilot/docs/search-reference.md
+    expected_trigger: true
+    expected_behaviors:
+      - 将字段注释与配置选择段的搜索策略介绍作为局部归属候选，说明它虽真实且影响候选质量，却不帮助当前入口填写日期或单班上限；不以底层选项不存在为依据。
+      - 指出更新配置段中的同分排序打断“新值何时生效、已有预览和活动班表是否变化”的主线，并给出保留状态条件的处理建议。
+      - 比较生成与紧邻校验章节，识别完整成功条件和能力边界的无增量重复，允许保留简短的流程指向。
+      - 指出发布步骤的构造搜索策略不改变已选预览的发布；区分求解质量与发布行为，不因它们属于同一流程就全部保留。
+      - 保留 UTC 日期和时间含义、单位范围与默认上限、同一预览标识的校验要求、覆盖及回滚边界，以及硬约束通过不保证偏好或全局最优。
+      - 将搜索参考中的策略、排序和夜间重算说明视为 SDK 复现任务的有效知识，不把相关机制一概判为错误或建议删除；只读核对并限定未验证的实现或运行结论。
+    forbidden_behaviors:
+      - 因全部技术陈述符合契约、读者懂术语或同属排班生命周期，而宣布局部表达无问题。
+      - 把所有算法和跨阶段说明都移除，遗漏必要的校验范围、状态或发布风险。
+      - 修改原文、契约、搜索参考或执行预览、校验、发布命令，或把本案例输入当作产品已运行的证据。
+  - id: edit-related-mechanisms-without-losing-operating-boundaries
+    request: 整理 RosterPilot 的 docs/operator-guide.md 和 examples/shift.json 的事实、结构与表达。读者具备排班约束、搜索和预览发布的基础知识，第一次使用本工具，当前任务是修改日期和单班上限、生成校验预览并发布。README.md、contract.json 和 docs/search-reference.md 可作依据。只修改两份目标材料，保持配置键值和功能事实不变，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/roster-pilot/README.md
+      - evals/maintain-docs/fixtures/roster-pilot/contract.json
+      - evals/maintain-docs/fixtures/roster-pilot/examples/shift.json
+      - evals/maintain-docs/fixtures/roster-pilot/docs/operator-guide.md
+      - evals/maintain-docs/fixtures/roster-pilot/docs/search-reference.md
+    expected_trigger: true
+    expected_behaviors:
+      - 收敛字段、配置选择和发布步骤中的搜索策略背景，必要时引用已有搜索参考，不为保存每句事实新增调优教程或仅将术语换短。
+      - 恢复配置变更生效的连续说明，并集中相邻校验章节的重复条件，保留生成预览到校验、发布的对象与命令衔接。
+      - 保留 UTC、单位范围和默认值、不可变预览与新值下次生效、活动版本不自动改变、同一标识校验、无回滚覆盖风险和非最优保证边界。
+      - 原配置键及非注释取值、README、契约和搜索参考保持原样；默认策略和质量影响可以在既有专业参考中继续存在。
+      - 交付实际变更及验证范围，不将静态契约核对或语法检查表述为命令实测成功。
+    forbidden_behaviors:
+      - 因追求简洁而抹去校验能力限制、日期解释、状态前提、覆盖风险或所有专业知识。
+      - 更改排班策略、配置取值、产品契约或编辑目标外文件，以迎合文档；运行产品命令。
   - id: preserve-internal-runbook-context
     request: 检查内部运行手册的操作是否清楚，部署地址和实际目录需要保留。
     input_files:

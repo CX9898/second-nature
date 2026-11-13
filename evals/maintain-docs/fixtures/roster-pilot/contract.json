@@ -1,0 +1,34 @@
+{
+  "commands": {
+    "preview": "rosterpilot preview --config CONFIG",
+    "check": "rosterpilot check PREVIEW_ID",
+    "publish": "rosterpilot publish PREVIEW_ID --replace-active"
+  },
+  "configuration": {
+    "day": {"type": "date", "interpretation": "UTC calendar day"},
+    "max_shift_hours": {"type": "integer", "default": 8, "minimum": 1, "maximum": 24},
+    "annotation_suffix": "_comment",
+    "paths": "relative to current working directory"
+  },
+  "advanced_sdk": {
+    "search_policy": {"enum": ["bounded", "complete"], "initial": "bounded"},
+    "effect": "changes candidate search order and selected schedule quality; hard limits still apply",
+    "nightly_optimizer": "can create a new preview using complete search; never publishes automatically",
+    "ordering": "ties are ordered by employee identifier, then shift start time"
+  },
+  "preview": {
+    "output": "prints an immutable preview identifier; times are UTC",
+    "cli_policy": "preview commands use bounded search; SDK and nightly previews can use complete search",
+    "configuration_changes": "apply to the next preview; do not change existing previews or the active schedule"
+  },
+  "check": {
+    "checks": ["all required slots assigned", "staff availability", "configured hard limits"],
+    "success": "exit code 0 and Ready",
+    "does_not_prove": ["every preference satisfied", "globally optimal schedule"]
+  },
+  "publish": {
+    "requires": "the selected preview identifier has passed check; a different preview must be checked separately",
+    "effect": "publishes that immutable preview without rerunning the solver",
+    "replacement": "replaces the active schedule; no rollback command or retained active-version history"
+  }
+}
