@@ -1,0 +1,41 @@
+{
+  "command": "reportmint render --config CONFIG",
+  "configuration": {
+    "source": {"type": "string", "required": true, "meaning": "existing UTF-8 JSON event file"},
+    "output": {"type": "string", "required": true, "meaning": "UTF-8 text report file"},
+    "window_minutes": {"type": "integer", "minimum": 1, "default": 30, "unit": "minutes"},
+    "overwrite": {"type": "boolean", "default": false},
+    "annotation_suffix": "_comment",
+    "annotation_type": "string",
+    "annotations": "ignored by CLI configuration loading"
+  },
+  "input": {
+    "format": "JSON array of objects with an at field containing an ISO 8601 timestamp with an explicit timezone",
+    "empty_array": "accepted; produces an empty report"
+  },
+  "paths": {
+    "relative_paths": "relative to the current working directory",
+    "output_parent": "must already exist"
+  },
+  "report": {
+    "window_origin": "1970-01-01T00:00:00Z",
+    "window_bounds": "fixed-length half-open intervals of window_minutes minutes from the origin",
+    "rows": "one line per nonempty window, ordered by start time, containing the UTC window start and event count",
+    "overwrite_false": "fail if output exists and preserve the existing file",
+    "overwrite_true": "replace existing output without retaining a previous version or providing undo",
+    "later_changes": "changing the source file or configuration does not update an existing report"
+  },
+  "cli": {
+    "instance_lifetime": "create a fresh ReportSession for every render command; do not reuse a session across commands",
+    "sequence": ["load_events(source)", "set_window_minutes(configured value or default)", "prepare_windows()", "write_report(output, overwrite)"],
+    "exit": "exit code 0 after a successful write; nonzero on invalid input, missing output directory, or refused overwrite"
+  },
+  "sdk": {
+    "constructor": "ReportSession() starts with no loaded events, window_minutes=30, and no prepared windows",
+    "load_events(path)": "replace the loaded events and invalidate prepared windows; later source-file changes are not read until load_events is called again",
+    "set_window_minutes(value)": "accept a positive integer; changing the value invalidates prepared windows; may be called before or after load_events",
+    "prepare_windows()": "requires events to have been loaded; compute windows from the current loaded events and current window_minutes, then mark them prepared",
+    "write_report(path, overwrite=false)": "requires prepared windows; otherwise raise WindowsNotPrepared and write nothing; use the same output and overwrite rules as the CLI",
+    "reuse": "multiple writes may reuse prepared windows while loaded events and window_minutes remain unchanged"
+  }
+}

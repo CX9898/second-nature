@@ -219,6 +219,26 @@ cases:
       - 只检查 Markdown，遗漏配置注释中的同类问题，或将无关背景仅换成更短术语和链接。
       - 将用户视角解释为删除所有跨模块说明、必要默认值、隐私限制或覆盖警告。
       - 为保存每句技术事实而新增搜索章节、缓冲区配置说明或其他文件，或更改源契约以迎合文档。
+  # Use a fresh copy of fixtures/report-mint. Evaluators receive this case's
+  # natural request and raw files, not the expected or forbidden behaviors.
+  - id: edit-state-constraints-for-current-entrypoint
+    request: 整理 ReportMint 的 README.md、examples/report.json 和 docs/session-api.md，使说明准确、清楚。
+    input_files:
+      - evals/maintain-docs/fixtures/report-mint/README.md
+      - evals/maintain-docs/fixtures/report-mint/contract.json
+      - evals/maintain-docs/fixtures/report-mint/examples/report.json
+      - evals/maintain-docs/fixtures/report-mint/docs/session-api.md
+    expected_trigger: true
+    expected_behaviors:
+      - 依据 README 的首次 CLI 使用任务判断配置注释，区分每次新建会话的入口与复用 SDK 会话的操作路径。
+      - 配置字段保留窗口长度的分钟单位、正整数约束和默认值，具体 SDK 重配调用由已有会话指南承接，不在字段旁新增术语解释或同义操作流程。
+      - SDK 指南保留加载或改值使窗口失效、重新准备后再写出、未准备时的错误行为，以及未改值时直接复用窗口的有效路径。
+      - 保留路径基准、输出目录、UTC、覆盖不可撤销与既有报表不自动更新的条件；配置值及权威契约保持不变。
+      - 检查实际改写和知识保留，交付区分静态契约核对与产品运行，不虚构不存在的实现或运行结果。
+    forbidden_behaviors:
+      - 仅因 SDK 状态约束真实且重要，就在 CLI 配置注释保留完整调用顺序，或将其换写到另一个同样不服务该任务的相邻位置。
+      - 以清理配置说明为由删除 SDK 当前任务必需的调用对象、顺序和状态条件，或把重新准备写成每次写出之前的普遍要求。
+      - 修改配置行为值、接口契约或虚构 CLI 需要手工操作已存在的会话。
   # These two cases use separate fresh copies of fixtures/pack-trail with the
   # same inputs and reader assumptions. Compare review and editing separately.
   - id: review-related-content-at-local-scope

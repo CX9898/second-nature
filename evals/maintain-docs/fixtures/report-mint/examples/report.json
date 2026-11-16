@@ -1,0 +1,10 @@
+{
+  "source_comment": "读取工作目录中的 UTF-8 JSON 事件数组；每条记录的 at 时间须带时区。",
+  "source": "events.json",
+  "output_comment": "路径相对于运行目录，父目录 reports 需要事先存在。",
+  "output": "reports/hourly.txt",
+  "window_minutes_comment": "单位为分钟，取正整数，省略时为 30；复用 ReportSession 并通过 set_window_minutes() 改值后，需要先调用 prepare_windows() 再调用 write_report()。",
+  "window_minutes": 60,
+  "overwrite_comment": "省略时为 false；设为 true 会覆盖同名报表，不保留旧版本且无法撤销。",
+  "overwrite": false
+}
