@@ -1,0 +1,27 @@
+{
+  "tool": "LabelDock",
+  "authority": "本文件定义本样本的完整产品行为，无实现可供执行。",
+  "paths": "所有相对输入输出路径以当前工作目录解析。",
+  "input": {"file": "labels.csv", "encoding": "UTF-8", "columns": ["name", "team"], "required_nonempty": ["name", "team"]},
+  "profiles": {"plain": {"quoted_fields": false}, "table": {"quoted_fields": true}},
+  "entry": {"build_profile": "table", "accepts_profile_flag": false, "uses_sdk_default": false},
+  "sdk": {"profile_default": "plain", "column_cache": "构造时为空，首次读取后记录 name 和 team 的列位置。"},
+  "build": {
+    "command": "labeldock build <csv> --out <preview>",
+    "requires": "输入符合所选 profile，预览输出路径不存在。",
+    "result": "保存不可变预览，不生成 HTML；源 CSV 修改只影响下一次 build，须换新预览文件名。"
+  },
+  "check": {
+    "command": "labeldock check <preview>",
+    "pass": "必填字段和页内布局通过，记录该预览内容的校验标记。",
+    "limit": "不核对姓名或部门是否真实，不证明已经打印。"
+  },
+  "emit": {
+    "command": "labeldock emit <preview> --out <html> [--replace]",
+    "requires": "同一预览内容已有 pass 标记；无需原始 CSV。",
+    "existing_output": "默认拒绝已有 HTML；--replace 不可撤销覆盖且无回滚。",
+    "failure": "前提不满足时失败且不改动已有 HTML。",
+    "success": "仅保证 HTML 已保存，不保证已经打印或人工核对。"
+  },
+  "layout_cache": "模块初始化时为空，第一次 emit 缓存内置版式；无需外部模板文件。"
+}

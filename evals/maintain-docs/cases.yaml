@@ -462,3 +462,82 @@ cases:
       - 完成文学改写，不选择项目文档技能。
     forbidden_behaviors:
       - 套用源码核对、版本历史或配置检查流程。
+  # Use a separate fresh copy of the selected reader-judgments directory for
+  # each case and repetition, not fixtures/project. Preserve all listed paths.
+  # The executing reviewer receives only its neutral request and selected input
+  # files, never this case definition or another variant's materials/verdicts.
+  # Only the alder request adds a diagnostic record before report compression;
+  # this experiment does not establish a mandatory skill-wide workflow.
+  - id: review-mixed-paragraph-and-adjacent-repetition
+    request: 审查 LabelDock 的 docs/guide.md 的事实、结构与表达。读者理解 CSV、路径和命令行，第一次生成、校验并写出铭牌；README.md、contract.json 和 labels.csv 是依据。仅报告问题，不修改任何文件，不运行产品命令。本次是诊断试验：先发送压缩汇总前的简短已确认发现记录，再独立验收审查报告并形成最终汇总；该记录仅用于比较发现阶段与汇总阶段，不作为固定流程。
+    input_files:
+      - evals/maintain-docs/fixtures/reader-judgments/alder/README.md
+      - evals/maintain-docs/fixtures/reader-judgments/alder/contract.json
+      - evals/maintain-docs/fixtures/reader-judgments/alder/labels.csv
+      - evals/maintain-docs/fixtures/reader-judgments/alder/docs/guide.md
+    expected_trigger: true
+    expected_behaviors:
+      - 在生成预览段内分别判断必要条件与背景，指出 CLI 已固定 table，SDK 默认 plain 和列名缓存初始化不帮助本入口准备输入或处理后续状态，不能因该段必要而整段保留。
+      - 定位写出段的版式缓存初始化说明，说明它不改变写出前提、覆盖选择或成功含义；允许精简或移出，而非要求删除真实技术知识本身。
+      - 比较生成段末尾与相邻校验章节的同一预览、pass、校验范围和非打印保证，明确前者重复后者且未增加动作或条件，建议以校验章节为完整说明并保留必要导航。
+      - 允许合并发现且不固定条目数，但初始记录和最终报告均须让各处位置、所对应的主线中断或重复关系及具体影响可辨；不能汇总成只有一个位置的笼统技术背景问题。
+      - 保留 UTF-8 与两列非空、引号字段、CLI 固定 table、输出路径不存在、新输入须新预览、同一预览 pass、无需原始 CSV、校验能力边界及不可撤销覆盖风险和 HTML 成功边界。
+      - 先提供本次诊断记录，再实际独立验收报告并修正成立的遗漏；全部材料保持原样，交付区分静态契约核对与未执行的产品行为。
+    forbidden_behaviors:
+      - 以全部陈述真实、属于必要章节或全流程相关为由忽略段内信息取舍，或只批评术语多而不说明局部增量。
+      - 合并时丢失写出段位置或生成与校验的具体对应关系，或仅列章节名并称重复而不说明重复什么及保留何处。
+      - 删除必要条件、把校验写成内容真实性保证、把 HTML 保存写成已打印，或执行产品命令、修改任何材料。
+      - 将本次先发记录的诊断安排推广为技能必须新增的固定阶段，或把执行者的新上下文自称为独立验收。
+  - id: review-retained-operating-conditions
+    request: 审查 LabelDock 的 docs/guide.md 的事实、结构与表达。读者理解 CSV、路径和命令行，第一次生成、校验并写出铭牌；README.md、contract.json 和 labels.csv 是依据。仅报告问题，不修改任何文件，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/reader-judgments/birch/README.md
+      - evals/maintain-docs/fixtures/reader-judgments/birch/contract.json
+      - evals/maintain-docs/fixtures/reader-judgments/birch/labels.csv
+      - evals/maintain-docs/fixtures/reader-judgments/birch/docs/guide.md
+    expected_trigger: true
+    expected_behaviors:
+      - 依据本份材料判断，确认正文未夹带 SDK 默认、缓存初始化背景，生成末尾仅提供通往完整校验说明的导航，不报告已经移除的局部问题。
+      - 保留与操作直接相关的全部条件和界限，包括 CLI 固定 table 与引号输入、输出路径不存在、新输入须新预览、同一预览 pass、无需原始 CSV、校验范围和不可撤销覆盖风险。
+      - 不把生成与写出分别说明自身结果视为无增量重复，能区分预览并非 HTML、校验不证明真实或已打印、HTML 保存不等于已打印或人工核对。
+      - 若无其他可确认的问题则明确报告该结论与静态核对范围，不以未提供实现为由虚构缺陷或声称产品已经实测。
+    forbidden_behaviors:
+      - 沿用其他变体的已知答案，报告本材料中不存在的默认或缓存说明以及完整重复段落。
+      - 为制造发现而删除有效条件、导航或各阶段结果界限，或仅因短文重复出现 pass 与打印就判为冗余。
+      - 修改材料或运行产品命令。
+  - id: review-entry-dependent-default-information
+    request: 审查 LabelDock 的 docs/guide.md 的事实、结构与表达。读者理解 CSV、路径和命令行，第一次生成、校验并写出铭牌；README.md、contract.json 和 labels.csv 是依据。仅报告问题，不修改任何文件，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/reader-judgments/cedar/README.md
+      - evals/maintain-docs/fixtures/reader-judgments/cedar/contract.json
+      - evals/maintain-docs/fixtures/reader-judgments/cedar/labels.csv
+      - evals/maintain-docs/fixtures/reader-judgments/cedar/docs/guide.md
+    expected_trigger: true
+    expected_behaviors:
+      - 读取真实入口契约，确认此 CLI 继承 SDK 默认 plain，样本姓名含逗号且用引号保护，保留 plain 不接受引号字段及须显式 --profile table 的适用条件。
+      - 在同一生成段内区分上述必要默认信息与列名缓存初始化背景；仍可报告后者无助于输入选择或状态衔接，不把整段技术说明统一保留或统一删除。
+      - 定位写出段的内置版式缓存背景，说明它不改变当前写出动作；如与生成段合并报告，仍保留两处位置和各自与操作主线的关系。
+      - 保留其他输入、状态、pass、覆盖与结果界限；生成末尾是导航而非完整重复，不制造相邻重复发现。
+      - 给出只读审查结论及未运行产品的边界，判断基于本案例契约，不从其他入口推断默认值无关。
+    forbidden_behaviors:
+      - 按 SDK、默认或初始化等关键词删去决定输入适用性的 profile 信息，或将命令中的 --profile table 当作可随意移除的内部细节。
+      - 建议沿用固定 table 的另一入口契约，修改 CSV 来回避正常引号字段，或因默认信息重要而保留所有缓存背景。
+      - 删除必要风险与状态条件、报告不存在的完整相邻重复、修改材料或运行产品命令。
+  - id: review-independently-delivered-entrypoints
+    request: 审查 LabelDock 的 prepare/README.md 和 write/README.md 的事实、结构与表达。读者理解 CSV、路径和命令行，第一次操作各自收到的入口；两份 README 独立交付的语境见根 README.md，contract.json 和 labels.csv 是依据。仅报告问题，不修改任何文件，不运行产品命令。
+    input_files:
+      - evals/maintain-docs/fixtures/reader-judgments/elm/README.md
+      - evals/maintain-docs/fixtures/reader-judgments/elm/contract.json
+      - evals/maintain-docs/fixtures/reader-judgments/elm/labels.csv
+      - evals/maintain-docs/fixtures/reader-judgments/elm/prepare/README.md
+      - evals/maintain-docs/fixtures/reader-judgments/elm/write/README.md
+    expected_trigger: true
+    expected_behaviors:
+      - 根据独立交付语境判断两个入口分别保留执行目录、同一预览 pass 与校验能力边界有任务价值，不把跨 README 的相同前提误判为应消除的相邻重复。
+      - 制作入口保留输入格式、引号字段、输出路径不存在、源修改不改变已有预览及重新生成须新文件名；写出入口保留无需原始 CSV、同一预览校验、覆盖风险和 HTML 成功边界。
+      - 能说明制作人员交出预览与接收人员写出预览是不同读者任务，接收方重新校验同一收到的预览并不要求重建或重新取得原始 CSV。
+      - 若无其他可确认的问题则明确报告该结论及静态核对、未运行边界，不强行生成重复发现。
+    forbidden_behaviors:
+      - 为全局去重建议任一独立交付 README 仅链接另一份，或让接收人员缺少必要前提才能完成写出。
+      - 把两个入口拼接成读者必经的一篇长文，并据此删去当地必需的 pass 或能力边界说明。
+      - 为减少重复要求省略接收端校验、要求接收端先重新构建、修改材料或运行产品命令。
