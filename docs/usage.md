@@ -1,6 +1,6 @@
 # 使用指南
 
-本文说明如何把一个已完成的技能安装到本地 Codex 或 Claude Code。先按 [编写指南](authoring.md#环境准备) 准备环境，从 [skills/](../skills/) 选择技能。以下命令均从仓库根目录执行，以 `maintain-docs` 为例；安装其他技能时替换对应名称。
+本文说明如何把一个已完成的技能安装到本地 Codex 或 Claude Code。先按 [编写指南](authoring.md#环境准备) 准备环境，从 [skills/](../skills/) 选择技能。以下命令均从仓库根目录执行，以 `project-docs` 为例；安装其他技能时替换对应名称。
 
 ## 选择安装位置
 
@@ -20,7 +20,7 @@ Claude.ai、Cowork 和云端会话有各自的配置方式，不读取上述本�
 先从仓库根目录检查技能：
 
 ```bash
-python scripts/validate.py --path skills/maintain-docs
+python scripts/validate.py --path skills/project-docs
 ```
 
 安装到本地 Codex 用户目录：
@@ -30,7 +30,7 @@ python - <<'PY'
 from pathlib import Path
 from shutil import copytree
 
-source = Path("skills/maintain-docs")
+source = Path("skills/project-docs")
 destination = Path.home() / ".agents" / "skills" / source.name
 copytree(source, destination)
 print(f"Installed {source.name} to {destination}")

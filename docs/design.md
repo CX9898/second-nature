@@ -27,13 +27,13 @@ second-nature/
 |-- AGENTS.md                    AI 维护此仓库时的约定
 |-- LICENSE                      原创内容的默认许可
 |-- skills/
-|   `-- maintain-docs/           可独立分发的技能包
+|   `-- project-docs/            可独立分发的技能包
 |       |-- SKILL.md
 |       |-- LICENSE
 |       `-- references/
 |-- evals/
 |   |-- README.md                评测方法与工作区约定
-|   `-- maintain-docs/           一个技能的完整评测输入
+|   `-- project-docs/            一个技能的完整评测输入
 |       |-- cases.yaml
 |       |-- fixtures/project/
 |       `-- inputs/

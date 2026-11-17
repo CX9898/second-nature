@@ -1,13 +1,13 @@
 # Manual cases; paths are relative to the repository root.
 # fixtures/project is synthetic input with intentional documentation defects.
-skill: maintain-docs
-fixture: evals/maintain-docs/fixtures/project
+skill: project-docs
+fixture: evals/project-docs/fixtures/project
 cases:
   - id: rewrite-user-facing-release-notes
     request: 将这份发布说明改成用户能直接理解的描述，保留实际使用限制和升级要求。
     input_files:
-      - evals/maintain-docs/inputs/release-notes.md
-      - evals/maintain-docs/fixtures/project/tool.py
+      - evals/project-docs/inputs/release-notes.md
+      - evals/project-docs/fixtures/project/tool.py
     expected_trigger: true
     expected_behaviors:
       - 说明用户可见行为、触发条件及必要的迁移操作。
@@ -19,8 +19,8 @@ cases:
   - id: maintain-generic-entrypoint
     request: 更新共享发布目录的 README，要通用一些，发布新版本时不需要反复改它。
     input_files:
-      - evals/maintain-docs/inputs/delivery-readme.md
-      - evals/maintain-docs/inputs/delivery-contract.json
+      - evals/project-docs/inputs/delivery-readme.md
+      - evals/project-docs/inputs/delivery-contract.json
     expected_trigger: true
     expected_behaviors:
       - 用目录职责、文件用途和稳定操作说明组织内容。
@@ -78,16 +78,16 @@ cases:
   - id: review-reader-semantics-with-valid-structure
     request: 审查 CatalogKit 的 docs/guide.md，判断第一次使用的人能否据此完成索引和报告任务。只报告问题，不修改文件。
     input_files:
-      - evals/maintain-docs/fixtures/catalog-kit/README.md
-      - evals/maintain-docs/fixtures/catalog-kit/catalog.py
-      - evals/maintain-docs/fixtures/catalog-kit/catalog_cli.py
-      - evals/maintain-docs/fixtures/catalog-kit/reporting.py
-      - evals/maintain-docs/fixtures/catalog-kit/examples/books.json
-      - evals/maintain-docs/fixtures/catalog-kit/examples/config.json
-      - evals/maintain-docs/fixtures/catalog-kit/examples/saved-index.json
-      - evals/maintain-docs/fixtures/catalog-kit/templates/card.txt
-      - evals/maintain-docs/fixtures/catalog-kit/docs/guide.md
-      - evals/maintain-docs/fixtures/catalog-kit/docs/lifecycle.md
+      - evals/project-docs/fixtures/catalog-kit/README.md
+      - evals/project-docs/fixtures/catalog-kit/catalog.py
+      - evals/project-docs/fixtures/catalog-kit/catalog_cli.py
+      - evals/project-docs/fixtures/catalog-kit/reporting.py
+      - evals/project-docs/fixtures/catalog-kit/examples/books.json
+      - evals/project-docs/fixtures/catalog-kit/examples/config.json
+      - evals/project-docs/fixtures/catalog-kit/examples/saved-index.json
+      - evals/project-docs/fixtures/catalog-kit/templates/card.txt
+      - evals/project-docs/fixtures/catalog-kit/docs/guide.md
+      - evals/project-docs/fixtures/catalog-kit/docs/lifecycle.md
     expected_trigger: true
     expected_behaviors:
       - 识别连续终端步骤中工作目录仍在 examples，后续报告命令却按仓库根目录解析脚本和路径；说明实际后果。
@@ -102,16 +102,16 @@ cases:
   - id: document-state-paths-and-transitive-runtime-resources
     request: 根据 CatalogKit 的现有实现，补齐 docs/lifecycle.md 的 Python 接入与离线报告说明，给出可衔接的使用片段。保留目录布局，产品代码和其他文档不要改。
     input_files:
-      - evals/maintain-docs/fixtures/catalog-kit/README.md
-      - evals/maintain-docs/fixtures/catalog-kit/catalog.py
-      - evals/maintain-docs/fixtures/catalog-kit/catalog_cli.py
-      - evals/maintain-docs/fixtures/catalog-kit/reporting.py
-      - evals/maintain-docs/fixtures/catalog-kit/examples/books.json
-      - evals/maintain-docs/fixtures/catalog-kit/examples/config.json
-      - evals/maintain-docs/fixtures/catalog-kit/examples/saved-index.json
-      - evals/maintain-docs/fixtures/catalog-kit/templates/card.txt
-      - evals/maintain-docs/fixtures/catalog-kit/docs/guide.md
-      - evals/maintain-docs/fixtures/catalog-kit/docs/lifecycle.md
+      - evals/project-docs/fixtures/catalog-kit/README.md
+      - evals/project-docs/fixtures/catalog-kit/catalog.py
+      - evals/project-docs/fixtures/catalog-kit/catalog_cli.py
+      - evals/project-docs/fixtures/catalog-kit/reporting.py
+      - evals/project-docs/fixtures/catalog-kit/examples/books.json
+      - evals/project-docs/fixtures/catalog-kit/examples/config.json
+      - evals/project-docs/fixtures/catalog-kit/examples/saved-index.json
+      - evals/project-docs/fixtures/catalog-kit/templates/card.txt
+      - evals/project-docs/fixtures/catalog-kit/docs/guide.md
+      - evals/project-docs/fixtures/catalog-kit/docs/lifecycle.md
     expected_trigger: true
     expected_behaviors:
       - 新建实例设置原始书目后先 prepare 再查询；重新 set_books 会使旧索引失效，须重新准备。
@@ -129,13 +129,13 @@ cases:
   - id: review-short-contract-composition
     request: 审查 ParcelDesk 的 docs/usage.md，判断示例数据能否按所述流程完成分组与检查。只报告问题，不修改文件。
     input_files:
-      - evals/maintain-docs/fixtures/parcel-desk/README.md
-      - evals/maintain-docs/fixtures/parcel-desk/parcel.py
-      - evals/maintain-docs/fixtures/parcel-desk/docs/usage.md
-      - evals/maintain-docs/fixtures/parcel-desk/docs/architecture.md
-      - evals/maintain-docs/fixtures/parcel-desk/examples/parts.csv
-      - evals/maintain-docs/fixtures/parcel-desk/examples/part-checks.csv
-      - evals/maintain-docs/fixtures/parcel-desk/examples/parcel-checks.csv
+      - evals/project-docs/fixtures/parcel-desk/README.md
+      - evals/project-docs/fixtures/parcel-desk/parcel.py
+      - evals/project-docs/fixtures/parcel-desk/docs/usage.md
+      - evals/project-docs/fixtures/parcel-desk/docs/architecture.md
+      - evals/project-docs/fixtures/parcel-desk/examples/parts.csv
+      - evals/project-docs/fixtures/parcel-desk/examples/part-checks.csv
+      - evals/project-docs/fixtures/parcel-desk/examples/parcel-checks.csv
     expected_trigger: true
     expected_behaviors:
       - 沿零件记录、按编号分组的包裹、检查值和检查接口核对计数单位，识别首个片段的零件检查值不能直接作为包裹检查值。
@@ -149,14 +149,14 @@ cases:
   - id: integrate-narrative-handoff
     request: 根据 case-inputs/handoff.md 的交接材料核对并修正 docs/architecture.md，使保存、恢复和展示流程一致；需要时对照实现。保留目录布局，仅修改这份文档。
     input_files:
-      - evals/maintain-docs/fixtures/parcel-desk/README.md
-      - evals/maintain-docs/fixtures/parcel-desk/parcel.py
-      - evals/maintain-docs/fixtures/parcel-desk/docs/usage.md
-      - evals/maintain-docs/fixtures/parcel-desk/docs/architecture.md
-      - evals/maintain-docs/fixtures/parcel-desk/examples/parts.csv
-      - evals/maintain-docs/fixtures/parcel-desk/examples/part-checks.csv
-      - evals/maintain-docs/fixtures/parcel-desk/examples/parcel-checks.csv
-      - evals/maintain-docs/inputs/parcel-handoff-narrative.md
+      - evals/project-docs/fixtures/parcel-desk/README.md
+      - evals/project-docs/fixtures/parcel-desk/parcel.py
+      - evals/project-docs/fixtures/parcel-desk/docs/usage.md
+      - evals/project-docs/fixtures/parcel-desk/docs/architecture.md
+      - evals/project-docs/fixtures/parcel-desk/examples/parts.csv
+      - evals/project-docs/fixtures/parcel-desk/examples/part-checks.csv
+      - evals/project-docs/fixtures/parcel-desk/examples/parcel-checks.csv
+      - evals/project-docs/inputs/parcel-handoff-narrative.md
     expected_trigger: true
     expected_behaviors:
       - 根据内容契约区分两种 SQLite 产物：恢复读取 parts 表的零件详情，展示读取 counts 表的计数；不能仅凭容器格式认定可互换。
@@ -170,14 +170,14 @@ cases:
   - id: integrate-contract-handoff
     request: 根据 case-inputs/handoff.md 的交接材料核对并修正 docs/architecture.md，使保存、恢复和展示流程一致；需要时对照实现。保留目录布局，仅修改这份文档。
     input_files:
-      - evals/maintain-docs/fixtures/parcel-desk/README.md
-      - evals/maintain-docs/fixtures/parcel-desk/parcel.py
-      - evals/maintain-docs/fixtures/parcel-desk/docs/usage.md
-      - evals/maintain-docs/fixtures/parcel-desk/docs/architecture.md
-      - evals/maintain-docs/fixtures/parcel-desk/examples/parts.csv
-      - evals/maintain-docs/fixtures/parcel-desk/examples/part-checks.csv
-      - evals/maintain-docs/fixtures/parcel-desk/examples/parcel-checks.csv
-      - evals/maintain-docs/inputs/parcel-handoff-contracts.md
+      - evals/project-docs/fixtures/parcel-desk/README.md
+      - evals/project-docs/fixtures/parcel-desk/parcel.py
+      - evals/project-docs/fixtures/parcel-desk/docs/usage.md
+      - evals/project-docs/fixtures/parcel-desk/docs/architecture.md
+      - evals/project-docs/fixtures/parcel-desk/examples/parts.csv
+      - evals/project-docs/fixtures/parcel-desk/examples/part-checks.csv
+      - evals/project-docs/fixtures/parcel-desk/examples/parcel-checks.csv
+      - evals/project-docs/inputs/parcel-handoff-contracts.md
     expected_trigger: true
     expected_behaviors:
       - 根据内容契约区分两种 SQLite 产物：恢复读取 parts 表的零件详情，展示读取 counts 表的计数；不能仅凭容器格式认定可互换。
@@ -191,8 +191,8 @@ cases:
   - id: preserve-technical-depth
     request: 整理算法文档，让它更容易阅读，保留有效推导、公式和实现对应关系。
     input_files:
-      - evals/maintain-docs/fixtures/project/docs/batching.md
-      - evals/maintain-docs/fixtures/project/tool.py
+      - evals/project-docs/fixtures/project/docs/batching.md
+      - evals/project-docs/fixtures/project/tool.py
     expected_trigger: true
     expected_behaviors:
       - 核对符号、数据流、适用条件、实现对应和验证依据。
@@ -204,10 +204,10 @@ cases:
   - id: edit-for-local-reader-knowledge
     request: 整理 BriefExport 的导出指南和示例配置说明，面向第一次导出文本的读者。功能事实以 README.md 和 export.schema.json 的现有契约为准，只修改 docs/export.md 和 examples/export.json，不运行安装或导出。
     input_files:
-      - evals/maintain-docs/fixtures/brief-export/README.md
-      - evals/maintain-docs/fixtures/brief-export/export.schema.json
-      - evals/maintain-docs/fixtures/brief-export/docs/export.md
-      - evals/maintain-docs/fixtures/brief-export/examples/export.json
+      - evals/project-docs/fixtures/brief-export/README.md
+      - evals/project-docs/fixtures/brief-export/export.schema.json
+      - evals/project-docs/fixtures/brief-export/docs/export.md
+      - evals/project-docs/fixtures/brief-export/examples/export.json
     expected_trigger: true
     expected_behaviors:
       - 将示例 JSON 中面向读者的配置说明纳入整理，删除与开关选择无关的搜索索引背景，保留开关方向和覆盖风险。
@@ -224,10 +224,10 @@ cases:
   - id: edit-state-constraints-for-current-entrypoint
     request: 整理 ReportMint 的 README.md、examples/report.json 和 docs/session-api.md，使说明准确、清楚。
     input_files:
-      - evals/maintain-docs/fixtures/report-mint/README.md
-      - evals/maintain-docs/fixtures/report-mint/contract.json
-      - evals/maintain-docs/fixtures/report-mint/examples/report.json
-      - evals/maintain-docs/fixtures/report-mint/docs/session-api.md
+      - evals/project-docs/fixtures/report-mint/README.md
+      - evals/project-docs/fixtures/report-mint/contract.json
+      - evals/project-docs/fixtures/report-mint/examples/report.json
+      - evals/project-docs/fixtures/report-mint/docs/session-api.md
     expected_trigger: true
     expected_behaviors:
       - 依据 README 的首次 CLI 使用任务判断配置注释，区分每次新建会话的入口与复用 SDK 会话的操作路径。
@@ -244,10 +244,10 @@ cases:
   - id: review-related-content-at-local-scope
     request: 审查 PackTrail 的 docs/backup.md 和 examples/backup.json 的事实、结构与表达。读者第一次用 PackTrail 为本地目录创建并校验备份，理解文件路径和命令行，但不了解归档内部格式；已有 README.md 和 contract.json 可作依据。仅报告问题，不修改文件，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/pack-trail/README.md
-      - evals/maintain-docs/fixtures/pack-trail/contract.json
-      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
-      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+      - evals/project-docs/fixtures/pack-trail/README.md
+      - evals/project-docs/fixtures/pack-trail/contract.json
+      - evals/project-docs/fixtures/pack-trail/docs/backup.md
+      - evals/project-docs/fixtures/pack-trail/examples/backup.json
     expected_trigger: true
     expected_behaviors:
       - 定位配置注释中的块索引与恢复背景，说明它虽与归档技术相关，却不帮助决定是否排除隐藏文件；建议精简或迁移该背景，保留开关方向。
@@ -264,10 +264,10 @@ cases:
   - id: edit-related-content-at-local-scope
     request: 整理 PackTrail 的 docs/backup.md 和 examples/backup.json 的事实、结构与表达。读者第一次用 PackTrail 为本地目录创建并校验备份，理解文件路径和命令行，但不了解归档内部格式；已有 README.md 和 contract.json 可作依据。只修改这两份材料，保持功能事实和配置键值不变，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/pack-trail/README.md
-      - evals/maintain-docs/fixtures/pack-trail/contract.json
-      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
-      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+      - evals/project-docs/fixtures/pack-trail/README.md
+      - evals/project-docs/fixtures/pack-trail/contract.json
+      - evals/project-docs/fixtures/pack-trail/docs/backup.md
+      - evals/project-docs/fixtures/pack-trail/examples/backup.json
     expected_trigger: true
     expected_behaviors:
       - 精简隐藏文件开关注释中的块索引与恢复背景，注释仍说明 true 的含义，不改变配置键值。
@@ -287,10 +287,10 @@ cases:
   - id: maintain-with-automatic-independent-acceptance
     request: 整理 PackTrail 的 docs/backup.md 和 examples/backup.json，让第一次创建并校验目录备份的人能够理解和使用。读者理解文件路径和命令行，但不了解归档内部格式；以 README.md 和 contract.json 为依据。只修改这两份材料，保持配置键值和功能事实不变，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/pack-trail/README.md
-      - evals/maintain-docs/fixtures/pack-trail/contract.json
-      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
-      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+      - evals/project-docs/fixtures/pack-trail/README.md
+      - evals/project-docs/fixtures/pack-trail/contract.json
+      - evals/project-docs/fixtures/pack-trail/docs/backup.md
+      - evals/project-docs/fixtures/pack-trail/examples/backup.json
     expected_trigger: true
     expected_behaviors:
       - 跨文档整理完成后实际调用独立验收子代理，使用不继承执行历史的上下文；从调用记录或返回元信息核实隔离，不能只根据最终自述判断。
@@ -308,11 +308,11 @@ cases:
   - id: independently-check-review-report-coverage
     request: 审查 PackTrail 的 docs/backup.md 和 examples/backup.json 的事实、结构与表达，判断第一次创建并校验备份的读者能否理解。读者理解路径和命令行，但不了解归档内部格式；README.md 和 contract.json 是现有依据，已有审查笔记位于 case-inputs/review-note.md。请给出覆盖约定范围的最终发现，仅报告，不修改任何文件，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/pack-trail/README.md
-      - evals/maintain-docs/fixtures/pack-trail/contract.json
-      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
-      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
-      - evals/maintain-docs/inputs/pack-trail-review-note.md
+      - evals/project-docs/fixtures/pack-trail/README.md
+      - evals/project-docs/fixtures/pack-trail/contract.json
+      - evals/project-docs/fixtures/pack-trail/docs/backup.md
+      - evals/project-docs/fixtures/pack-trail/examples/backup.json
+      - evals/project-docs/inputs/pack-trail-review-note.md
     expected_trigger: true
     expected_behaviors:
       - 实际以无执行历史的子代理验收审查范围和报告完整性，先对原始材料形成独立发现，再提供已有笔记和执行者报告供对照。
@@ -328,10 +328,10 @@ cases:
   - id: keep-narrow-edit-within-acceptance-scope
     request: 只把 examples/backup.json 的 exclude_hidden_comment 改成直接说明 true 和 false 如何影响隐藏文件的注释。其他字段、配置取值和文档保持原样，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/pack-trail/README.md
-      - evals/maintain-docs/fixtures/pack-trail/contract.json
-      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
-      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+      - evals/project-docs/fixtures/pack-trail/README.md
+      - evals/project-docs/fixtures/pack-trail/contract.json
+      - evals/project-docs/fixtures/pack-trail/docs/backup.md
+      - evals/project-docs/fixtures/pack-trail/examples/backup.json
     expected_trigger: true
     expected_behaviors:
       - 仅改变指定注释的字符串，准确说明排除或包含点号开头文件及目录子树，不改变其他字段、取值和文件。
@@ -344,10 +344,10 @@ cases:
   - id: honor-explicit-no-delegation
     request: 只把 examples/backup.json 的 exclude_hidden_comment 改成直接说明 true 和 false 如何影响隐藏文件的注释。本次不要调用子代理，完成对应自验收即可。其他字段、配置取值和文档保持原样，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/pack-trail/README.md
-      - evals/maintain-docs/fixtures/pack-trail/contract.json
-      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
-      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+      - evals/project-docs/fixtures/pack-trail/README.md
+      - evals/project-docs/fixtures/pack-trail/contract.json
+      - evals/project-docs/fixtures/pack-trail/docs/backup.md
+      - evals/project-docs/fixtures/pack-trail/examples/backup.json
     expected_trigger: true
     expected_behaviors:
       - 遵守用户明确禁止委派的要求，实际不调用验收子代理，完成指定注释及必要上下文的自验收。
@@ -362,12 +362,12 @@ cases:
   - id: continue-after-failed-report-acceptance
     request: PackTrail 的审查报告尚未通过验收。原报告是 case-inputs/review-note.md，验收意见是 case-inputs/acceptance-feedback.md。请在原范围内继续补查和纠正报告，并完成复验。范围仍是 docs/backup.md 和 examples/backup.json 的事实、结构与表达；读者第一次创建并校验目录备份，理解路径和命令行但不了解归档内部格式；README.md 和 contract.json 是依据。仅报告，不修改任何文件，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/pack-trail/README.md
-      - evals/maintain-docs/fixtures/pack-trail/contract.json
-      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
-      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
-      - evals/maintain-docs/inputs/pack-trail-review-note.md
-      - evals/maintain-docs/inputs/pack-trail-acceptance-feedback.md
+      - evals/project-docs/fixtures/pack-trail/README.md
+      - evals/project-docs/fixtures/pack-trail/contract.json
+      - evals/project-docs/fixtures/pack-trail/docs/backup.md
+      - evals/project-docs/fixtures/pack-trail/examples/backup.json
+      - evals/project-docs/inputs/pack-trail-review-note.md
+      - evals/project-docs/inputs/pack-trail-acceptance-feedback.md
     expected_trigger: true
     expected_behaviors:
       - 核实未通过意见，补查并修订最终报告，不能仅重复原报告或输出修复计划。
@@ -385,10 +385,10 @@ cases:
   - id: complete-without-independent-acceptance-capability
     request: 整理 PackTrail 的 docs/backup.md 和 examples/backup.json，让第一次创建并校验目录备份的人能够理解和使用。读者理解文件路径和命令行，但不了解归档内部格式；以 README.md 和 contract.json 为依据。只修改这两份材料，保持配置键值和功能事实不变，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/pack-trail/README.md
-      - evals/maintain-docs/fixtures/pack-trail/contract.json
-      - evals/maintain-docs/fixtures/pack-trail/docs/backup.md
-      - evals/maintain-docs/fixtures/pack-trail/examples/backup.json
+      - evals/project-docs/fixtures/pack-trail/README.md
+      - evals/project-docs/fixtures/pack-trail/contract.json
+      - evals/project-docs/fixtures/pack-trail/docs/backup.md
+      - evals/project-docs/fixtures/pack-trail/examples/backup.json
     expected_trigger: true
     expected_behaviors:
       - 完成已授权的文档整理与自验收，明确本环境没有独立上下文验收能力及因此未完成的独立验证。
@@ -402,11 +402,11 @@ cases:
   - id: review-related-mechanisms-at-the-wrong-reading-point
     request: 审查 RosterPilot 的 docs/operator-guide.md 和 examples/shift.json 的事实、结构与表达。读者具备排班约束、搜索和预览发布的基础知识，第一次使用本工具，当前任务是修改日期和单班上限、生成校验预览并发布。README.md、contract.json 和 docs/search-reference.md 可作依据。仅报告问题，不修改文件，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/roster-pilot/README.md
-      - evals/maintain-docs/fixtures/roster-pilot/contract.json
-      - evals/maintain-docs/fixtures/roster-pilot/examples/shift.json
-      - evals/maintain-docs/fixtures/roster-pilot/docs/operator-guide.md
-      - evals/maintain-docs/fixtures/roster-pilot/docs/search-reference.md
+      - evals/project-docs/fixtures/roster-pilot/README.md
+      - evals/project-docs/fixtures/roster-pilot/contract.json
+      - evals/project-docs/fixtures/roster-pilot/examples/shift.json
+      - evals/project-docs/fixtures/roster-pilot/docs/operator-guide.md
+      - evals/project-docs/fixtures/roster-pilot/docs/search-reference.md
     expected_trigger: true
     expected_behaviors:
       - 将字段注释与配置选择段的搜索策略介绍作为局部归属候选，说明它虽真实且影响候选质量，却不帮助当前入口填写日期或单班上限；不以底层选项不存在为依据。
@@ -422,11 +422,11 @@ cases:
   - id: edit-related-mechanisms-without-losing-operating-boundaries
     request: 整理 RosterPilot 的 docs/operator-guide.md 和 examples/shift.json 的事实、结构与表达。读者具备排班约束、搜索和预览发布的基础知识，第一次使用本工具，当前任务是修改日期和单班上限、生成校验预览并发布。README.md、contract.json 和 docs/search-reference.md 可作依据。只修改两份目标材料，保持配置键值和功能事实不变，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/roster-pilot/README.md
-      - evals/maintain-docs/fixtures/roster-pilot/contract.json
-      - evals/maintain-docs/fixtures/roster-pilot/examples/shift.json
-      - evals/maintain-docs/fixtures/roster-pilot/docs/operator-guide.md
-      - evals/maintain-docs/fixtures/roster-pilot/docs/search-reference.md
+      - evals/project-docs/fixtures/roster-pilot/README.md
+      - evals/project-docs/fixtures/roster-pilot/contract.json
+      - evals/project-docs/fixtures/roster-pilot/examples/shift.json
+      - evals/project-docs/fixtures/roster-pilot/docs/operator-guide.md
+      - evals/project-docs/fixtures/roster-pilot/docs/search-reference.md
     expected_trigger: true
     expected_behaviors:
       - 收敛字段、配置选择和发布步骤中的搜索策略背景，必要时引用已有搜索参考，不为保存每句事实新增调优教程或仅将术语换短。
@@ -440,7 +440,7 @@ cases:
   - id: preserve-internal-runbook-context
     request: 检查内部运行手册的操作是否清楚，部署地址和实际目录需要保留。
     input_files:
-      - evals/maintain-docs/fixtures/project/docs/internal/operations.md
+      - evals/project-docs/fixtures/project/docs/internal/operations.md
     expected_trigger: true
     expected_behaviors:
       - 保留完成内部任务所需的目标地址和路径。
@@ -450,7 +450,7 @@ cases:
   - id: validate-with-bounded-side-effects
     request: 检查文档里的安装和容器清理示例，说明其前提和影响，不实际执行这些操作。
     input_files:
-      - evals/maintain-docs/fixtures/project/docs/internal/operations.md
+      - evals/project-docs/fixtures/project/docs/internal/operations.md
     expected_trigger: true
     expected_behaviors:
       - 静态核对命令、工作目录和影响范围。
@@ -460,8 +460,8 @@ cases:
   - id: keep-project-language-and-public-attribution
     request: 审查英文项目文档，保持英文，保留公开维护者联系方式和许可证署名。
     input_files:
-      - evals/maintain-docs/inputs/english-readme.md
-      - evals/maintain-docs/fixtures/project/tool.py
+      - evals/project-docs/inputs/english-readme.md
+      - evals/project-docs/fixtures/project/tool.py
     expected_trigger: true
     expected_behaviors:
       - 沿用指定语言和合法公开归属信息。
@@ -491,10 +491,10 @@ cases:
   - id: review-mixed-paragraph-and-adjacent-repetition
     request: 审查 LabelDock 的 docs/guide.md 的事实、结构与表达。读者理解 CSV、路径和命令行，第一次生成、校验并写出铭牌；README.md、contract.json 和 labels.csv 是依据。仅报告问题，不修改任何文件，不运行产品命令。本次是诊断试验：先发送压缩汇总前的简短已确认发现记录，再独立验收审查报告并形成最终汇总；该记录仅用于比较发现阶段与汇总阶段，不作为固定流程。
     input_files:
-      - evals/maintain-docs/fixtures/reader-judgments/alder/README.md
-      - evals/maintain-docs/fixtures/reader-judgments/alder/contract.json
-      - evals/maintain-docs/fixtures/reader-judgments/alder/labels.csv
-      - evals/maintain-docs/fixtures/reader-judgments/alder/docs/guide.md
+      - evals/project-docs/fixtures/reader-judgments/alder/README.md
+      - evals/project-docs/fixtures/reader-judgments/alder/contract.json
+      - evals/project-docs/fixtures/reader-judgments/alder/labels.csv
+      - evals/project-docs/fixtures/reader-judgments/alder/docs/guide.md
     expected_trigger: true
     expected_behaviors:
       - 在生成预览段内分别判断必要条件与背景，指出 CLI 已固定 table，SDK 默认 plain 和列名缓存初始化不帮助本入口准备输入或处理后续状态，不能因该段必要而整段保留。
@@ -511,10 +511,10 @@ cases:
   - id: review-retained-operating-conditions
     request: 审查 LabelDock 的 docs/guide.md 的事实、结构与表达。读者理解 CSV、路径和命令行，第一次生成、校验并写出铭牌；README.md、contract.json 和 labels.csv 是依据。仅报告问题，不修改任何文件，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/reader-judgments/birch/README.md
-      - evals/maintain-docs/fixtures/reader-judgments/birch/contract.json
-      - evals/maintain-docs/fixtures/reader-judgments/birch/labels.csv
-      - evals/maintain-docs/fixtures/reader-judgments/birch/docs/guide.md
+      - evals/project-docs/fixtures/reader-judgments/birch/README.md
+      - evals/project-docs/fixtures/reader-judgments/birch/contract.json
+      - evals/project-docs/fixtures/reader-judgments/birch/labels.csv
+      - evals/project-docs/fixtures/reader-judgments/birch/docs/guide.md
     expected_trigger: true
     expected_behaviors:
       - 依据本份材料判断，确认正文未夹带 SDK 默认、缓存初始化背景，生成末尾仅提供通往完整校验说明的导航，不报告已经移除的局部问题。
@@ -528,10 +528,10 @@ cases:
   - id: review-entry-dependent-default-information
     request: 审查 LabelDock 的 docs/guide.md 的事实、结构与表达。读者理解 CSV、路径和命令行，第一次生成、校验并写出铭牌；README.md、contract.json 和 labels.csv 是依据。仅报告问题，不修改任何文件，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/reader-judgments/cedar/README.md
-      - evals/maintain-docs/fixtures/reader-judgments/cedar/contract.json
-      - evals/maintain-docs/fixtures/reader-judgments/cedar/labels.csv
-      - evals/maintain-docs/fixtures/reader-judgments/cedar/docs/guide.md
+      - evals/project-docs/fixtures/reader-judgments/cedar/README.md
+      - evals/project-docs/fixtures/reader-judgments/cedar/contract.json
+      - evals/project-docs/fixtures/reader-judgments/cedar/labels.csv
+      - evals/project-docs/fixtures/reader-judgments/cedar/docs/guide.md
     expected_trigger: true
     expected_behaviors:
       - 读取真实入口契约，确认此 CLI 继承 SDK 默认 plain，样本姓名含逗号且用引号保护，保留 plain 不接受引号字段及须显式 --profile table 的适用条件。
@@ -546,11 +546,11 @@ cases:
   - id: review-independently-delivered-entrypoints
     request: 审查 LabelDock 的 prepare/README.md 和 write/README.md 的事实、结构与表达。读者理解 CSV、路径和命令行，第一次操作各自收到的入口；两份 README 独立交付的语境见根 README.md，contract.json 和 labels.csv 是依据。仅报告问题，不修改任何文件，不运行产品命令。
     input_files:
-      - evals/maintain-docs/fixtures/reader-judgments/elm/README.md
-      - evals/maintain-docs/fixtures/reader-judgments/elm/contract.json
-      - evals/maintain-docs/fixtures/reader-judgments/elm/labels.csv
-      - evals/maintain-docs/fixtures/reader-judgments/elm/prepare/README.md
-      - evals/maintain-docs/fixtures/reader-judgments/elm/write/README.md
+      - evals/project-docs/fixtures/reader-judgments/elm/README.md
+      - evals/project-docs/fixtures/reader-judgments/elm/contract.json
+      - evals/project-docs/fixtures/reader-judgments/elm/labels.csv
+      - evals/project-docs/fixtures/reader-judgments/elm/prepare/README.md
+      - evals/project-docs/fixtures/reader-judgments/elm/write/README.md
     expected_trigger: true
     expected_behaviors:
       - 根据独立交付语境判断两个入口分别保留执行目录、同一预览 pass 与校验能力边界有任务价值，不把跨 README 的相同前提误判为应消除的相邻重复。

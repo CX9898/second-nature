@@ -46,7 +46,7 @@ cp -i templates/eval-case.yaml evals/review-experiment/cases.yaml
 
 至少覆盖一条应触发请求、一条相近但不应触发的请求，以及一个重要边界场景。判据关注任务结果，不固定模型的措辞、标题或实现细节。
 
-`fixture` 和 `input_files` 都从仓库根目录解析，不相对于 `cases.yaml`。例如 [maintain-docs 案例](maintain-docs/cases.yaml) 的 `fixture: evals/maintain-docs/fixtures/project` 指向只读的源项目；它不是实际执行时允许修改的工作区。
+`fixture` 和 `input_files` 都从仓库根目录解析，不相对于 `cases.yaml`。例如 [project-docs 案例](project-docs/cases.yaml) 的 `fixture: evals/project-docs/fixtures/project` 指向只读的源项目；它不是实际执行时允许修改的工作区。
 
 ## 准备独立工作区
 
@@ -65,8 +65,8 @@ python - <<'PY'
 from shutil import copytree
 
 copytree(
-    "evals/maintain-docs/fixtures/project",
-    ".local/evals/maintain-docs/trial-001/repair-documentation-and-generator-source/baseline",
+    "evals/project-docs/fixtures/project",
+    ".local/evals/project-docs/trial-001/repair-documentation-and-generator-source/baseline",
 )
 PY
 ```

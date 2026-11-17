@@ -1,5 +1,5 @@
 ---
-name: maintain-docs
+name: project-docs
 description: 编写、审查或整理软件项目文档，支持单篇与仓库级的事实核对、读者视角改写和同步维护。用于 README、使用与配置指南、API 参考、架构、ADR 和发布说明等文档任务。
 license: MIT
 ---
