@@ -1,53 +1,62 @@
 # 使用指南
 
-本文说明如何把一个已完成的技能安装到本地 Codex 或 Claude Code。先按 [编写指南](authoring.md#环境准备) 准备环境，从 [skills/](../skills/) 选择技能。以下命令均从仓库根目录执行，以 `project-docs` 为例；安装其他技能时替换对应名称。
+本指南适用于本地 Codex 和 Claude Code。先获取仓库副本，在仓库根目录运行以下命令。安装脚本只需 Python 3.10 或更高版本。
 
-## 选择安装位置
+## 一键安装
 
-仓库中的 `skills/` 保存源文件；客户端从自己的发现目录加载技能。以下路径于 2026-10-29 依据表中的公开源码和官方文档核对，已安装版本可能不同，安装后仍需确认客户端能实际发现技能。
+在 Windows PowerShell 中，将仓库中的全部技能安装到 Codex 用户级目录。
 
-| 客户端范围 | 用户级目录 | 项目级目录 | 核实来源 |
-| --- | --- | --- | --- |
-| 本地 Codex | `~/.agents/skills/<name>/SKILL.md` | 项目范围内的 `.agents/skills/<name>/SKILL.md` | [OpenAI 第一方源码](https://github.com/openai/codex/blob/main/codex-rs/ext/skills/src/host_roots.rs) |
-| 本地 Claude Code | `~/.claude/skills/<name>/SKILL.md` | `.claude/skills/<name>/SKILL.md` | [Claude Code 官方文档](https://code.claude.com/docs/en/skills) |
-
-用户级安装适用于多个项目；项目级安装只服务对应项目。Codex 的旧 `$CODEX_HOME/skills` 在核实的源码中仍为兼容保留路径，新安装使用上表位置。
-
-Claude.ai、Cowork 和云端会话有各自的配置方式，不读取上述本机用户目录时，需要按对应环境的文档安装。
-
-## 校验并复制
-
-先从仓库根目录检查技能：
-
-```bash
-python scripts/validate.py --path skills/project-docs
+```powershell
+py -3 scripts/install.py
 ```
 
-安装到本地 Codex 用户目录：
+在 Linux 或 macOS 终端中，运行同一个脚本。
 
-```bash
-python - <<'PY'
-from pathlib import Path
-from shutil import copytree
-
-source = Path("skills/project-docs")
-destination = Path.home() / ".agents" / "skills" / source.name
-copytree(source, destination)
-print(f"Installed {source.name} to {destination}")
-PY
+```sh
+python3 scripts/install.py
 ```
 
-目标已存在时，`copytree` 会报错；更新已有安装见下节。安装到本地 Claude Code 时，将代码中的 `.agents` 改成 `.claude`；项目级安装则将目标改为相应项目下的发现目录。
+如果系统通过 `python` 提供 Python 3.10 或更高版本，也可以用 `python scripts/install.py`。
 
-复制整个技能文件夹，包含其相对路径资源。仓库文档、模板和评测目录无需安装。
+将下面的参数加在本机的安装命令末尾，可选择客户端、技能或安装位置。
+
+| 要做什么 | 添加的参数 |
+| --- | --- |
+| 安装全部技能到 Claude Code | `--client claude` |
+| 只安装 `project-docs` 到 Codex | `project-docs` |
+| 只安装 `project-docs` 到 Claude Code | `--client claude project-docs` |
+| 安装到指定的技能目录 | `--dest "/path/to/project/.agents/skills"`（换成实际路径） |
+
+`--dest` 直接指定目标目录，与 `--client` 二选一。相对路径以运行命令的目录为基准。
+
+[安装脚本](../scripts/install.py) 自动查找带有 `SKILL.md` 的 [`skills/<name>/`](../skills/) 目录，复制整个技能目录，包括许可证和引用文件。终端用 `INSTALLED`、`UPDATED` 或 `SKIP` 显示每个技能的结果。安装失败时查看 `ERROR` 行定位原因。
+
+如需在安装前检查本地修改过的技能，先按[基础校验](authoring.md#基础校验)运行校验器。
+
+## 安装位置
+
+| 客户端 | 用户级技能目录 | 项目级技能目录 |
+| --- | --- | --- |
+| 本地 Codex | `~/.agents/skills/` | 项目内的 `.agents/skills/` |
+| 本地 Claude Code | `~/.claude/skills/` | 项目内的 `.claude/skills/` |
+
+用户级技能可在多个项目使用。安装到单个项目时，将 `--dest` 指向该项目的技能目录。客户端发现规则见 [OpenAI 文档](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills)和 [Claude Code 文档](https://code.claude.com/docs/en/skills)。
+
+默认安装到 `~/.agents/skills/`。如果该目录没有同名项，脚本会沿用旧目录 `$CODEX_HOME/skills/`（默认 `~/.codex/skills/`）里的同名安装。两处都有同名技能时，脚本只处理 `~/.agents/skills/` 中的版本，Codex 仍可能显示两项。旧目录的兼容读取见 [Codex 源码](https://github.com/openai/codex/blob/main/codex-rs/ext/skills/src/host_roots.rs)。
+
+Claude.ai、Cowork 和云端会话有各自的配置方式。请按对应环境的文档安装。
 
 ## 确认可用
 
-按客户端要求刷新或新建会话，确认它能发现该技能，再用真实请求检查技能选择记录和任务结果。客户端版本可能与引用源码不同，以实际发现和执行结果为准；记录方式见 [评测指南](../evals/README.md)。
+先在客户端的技能列表中查找已安装的技能。找不到时，按客户端文档刷新或新建会话。再用真实请求检查技能是否被选中，以及任务结果是否符合预期。记录方式见 [评测指南](../evals/README.md)。
 
 ## 更新与卸载
 
-复制安装不会自动同步仓库修改。更新前比较源目录与已安装目录，保留安装处的独有修改，校验和评测源文件后再替换对应技能。卸载时仅移除该技能目录，不清理客户端中的其他技能。
+更新本地仓库副本后，再运行安装命令即可补装新增技能并更新已有技能。脚本以当前仓库副本为准。已有安装一致时跳过，有差异时将旧副本备份到技能目录旁的目录，再安装仓库中的版本。安装中断后可重跑同一命令。
+
+要恢复旧版本，先移走当前安装目录，再将 `UPDATED` 行标出的备份目录移回原安装位置。如果重跑时出现 `BACKUP` 行，旧版本的备份路径见该行。
+
+脚本更新带有 `SKILL.md` 的普通安装目录。同名的其他文件或目录，以及内容有差异的链接安装，会报错并保留原项。卸载时仅移除对应技能目录。
 
 ## 客户端扩展
 
